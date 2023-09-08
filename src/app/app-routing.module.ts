@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'register-movie',
+    loadChildren: () => import('./register-movie/register-movie.module').then( m => m.RegisterMoviePageModule)
+  },
 ];
 
 @NgModule({

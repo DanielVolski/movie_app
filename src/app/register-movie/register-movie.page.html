@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Register your movie</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Register your movie</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list>
+    <ion-item>
+      <ion-input label="Movie title" labelPlacement="stacked" placeholder="Type the title of the movie"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Director name" labelPlacement="stacked" placeholder="Type the name of the director"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Writer name" labelPlacement="stacked" placeholder="Type the name of the writer"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Release date" labelPlacement="stacked" placeholder="Type the release date"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select label="Genres" labelPlacement="stacked" [multiple]="true">
+        <ion-select-option value="Action">Action</ion-select-option>
+        <ion-select-option value="Adventure">Adventure</ion-select-option>
+        <ion-select-option value="Comedy">Comedy</ion-select-option>
+        <ion-select-option value="Crime">Crime</ion-select-option>
+        <ion-select-option value="Drama">Drama</ion-select-option>
+        <ion-select-option value="Horror">Adventure</ion-select-option>
+        <ion-select-option value="Romance">Romance</ion-select-option>
+        <ion-select-option value="Science Fiction">Science Fiction</ion-select-option>
+        <ion-select-option value="Thriller">Thriller</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>
