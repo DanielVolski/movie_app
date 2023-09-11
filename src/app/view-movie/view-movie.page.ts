@@ -23,6 +23,12 @@ export class ViewMoviePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.movie = history.state.movie;
+    this.title = this.movie.title;
+    this.director = this.movie.director;
+    this.writer = this.movie.writer;
+    this.releaseDate = this.movie.releaseDate.toString();
+    this.genres = this.movie.genres;
   }
 
   edit() {
@@ -50,5 +56,9 @@ export class ViewMoviePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  backToHome() {
+    this.router.navigate(["/home"])
   }
 }

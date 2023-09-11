@@ -26,7 +26,6 @@
     <ion-item>
       <ion-select label="Genres" labelPlacement="stacked" [multiple]="true" [(ngModel)]="genres">
         <ion-select-option value="Action">Action</ion-select-option>
-        <ion-select-option value="Adventure">Adventure</ion-select-option>
         <ion-select-option value="Comedy">Comedy</ion-select-option>
         <ion-select-option value="Crime">Crime</ion-select-option>
         <ion-select-option value="Drama">Drama</ion-select-option>
@@ -37,5 +36,5 @@
       </ion-select>
     </ion-item>
   </ion-list>
-  <ion-button expand="block">Register</ion-button>
+  <ion-button (click)="edit()" expand="block">Register</ion-button>
 </ion-content>
