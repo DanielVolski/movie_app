@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'register-movie',
     loadChildren: () => import('./register-movie/register-movie.module').then( m => m.RegisterMoviePageModule)
   },
+  {
+    path: 'view-movie',
+    loadChildren: () => import('./view-movie/view-movie.module').then( m => m.ViewMoviePageModule)
+  },
 ];
 
 @NgModule({

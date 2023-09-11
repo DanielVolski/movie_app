@@ -26,8 +26,11 @@ export class HomePage{
     })
   }
 
-  goToRegister(movie: Movie) {
-    this.router.navigateByUrl("/app-register-movie", {state: {movie: movie}})
+  goToRegister() {
+    this.router.navigate(["/register-movie"])
   }
 
+  goToEdit(movie: Movie) {
+    this.router.navigateByUrl("/view-movie", {state: {movie: movie}});
+  }
 }

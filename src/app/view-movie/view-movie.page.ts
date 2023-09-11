@@ -1,34 +1,45 @@
 import { Component, OnInit } from '@angular/core';
+import { Movie } from '../model/entities/Movie';
 import { Router } from '@angular/router';
 import { FirebaseService } from '../model/services/firebase.service';
-import { Movie } from '../model/entities/Movie';
 import { AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-register-movie',
-  templateUrl: './register-movie.page.html',
-  styleUrls: ['./register-movie.page.scss'],
+  selector: 'app-view-movie',
+  templateUrl: './view-movie.page.html',
+  styleUrls: ['./view-movie.page.scss'],
 })
-export class RegisterMoviePage implements OnInit {
+export class ViewMoviePage implements OnInit {
   movie!: Movie;
   title!: string;
   director!: string;
   writer!: string;
   releaseDate!: string;
   genres: string[] = [];
+  constructor(
+    private router: Router,
+    private firebase: FirebaseService,
+    private alertController: AlertController
+  ) { }
 
-  constructor(private router: Router, private firebase: FirebaseService, private alertController: AlertController) { }
+  ngOnInit() {
+  }
 
-  create() {
+  edit() {
     if (this.title && this.director && this.writer && this.genres.length > 0) {
       let releaseDate = new Date(this.releaseDate);
-      this.firebase.create(new Movie(this.title, this.director, this.writer, releaseDate, this.genres));
+      let updated: Movie = new Movie(this.title, this.director, this.writer, releaseDate, this.genres)
+      this.firebase.update(updated, this.movie.id);
       this.router.navigate(["/home"]);
     } else {
       this.presentAlert("Error", "Empty fields", "All the fields needs to be filled!");
     }
   }
 
+  delete() {
+    this.firebase.delete(this.movie.id);
+    this.router.navigate(["/home"]);
+  }
 
   private async presentAlert(header: string, subHeader: string, message: string) {
     const alert = await this.alertController.create({
@@ -40,9 +51,4 @@ export class RegisterMoviePage implements OnInit {
 
     await alert.present();
   }
-
-
-  ngOnInit() {
-  }
-
 }

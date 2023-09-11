@@ -7,18 +7,26 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Meus Filmes</ion-title>
+      <ion-title size="large">My Films</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
+  <div id="container start">
    <ion-list *ngFor="let movie of movies">
-      <ion-card (click)="goToRegister(movie)">
-        <ion-card-header>
-          <ion-card-title>{{movie.title}}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>Escritor</ion-card-content>
-      </ion-card>
+      <ion-item>
+        <ion-card (click)="goToEdit(movie)" style="width: 100%;">
+          <ion-card-header>
+            <ion-card-title>{{movie.title}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>Writer</ion-card-content>
+        </ion-card>
+      </ion-item>
    </ion-list>
   </div>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="goToRegister()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+

@@ -14,6 +14,13 @@ export class Movie {
         this._genres = genres;
     }
 
+	public get id(): string {
+        return this._id;
+    }
+    public set id(value: string) {
+        this._id = value;
+    }
+	
 	public get title(): string {
 		return this._title;
 	}
