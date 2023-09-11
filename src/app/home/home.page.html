@@ -12,10 +12,10 @@
   </ion-header>
 
   <div id="container">
-   <ion-list>
-      <ion-card>
+   <ion-list *ngFor="let movie of movies">
+      <ion-card (click)="goToRegister(movie)">
         <ion-card-header>
-          <ion-card-title>Título do Filme</ion-card-title>
+          <ion-card-title>{{movie.title}}</ion-card-title>
         </ion-card-header>
         <ion-card-content>Escritor</ion-card-content>
       </ion-card>

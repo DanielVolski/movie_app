@@ -9,17 +9,25 @@ import { Movie } from '../model/entities/Movie';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage{
-title!: string;
-genres: string[] = []
+  movies: Movie[] = [];
 
 
   constructor(
     private router: Router,
     private firebase: FirebaseService
-  ) {}
+  ) {
+    this.firebase.read().subscribe(res =>{
+      this.movies = res.map(movie => {
+        return {
+          id: movie.payload.doc.id,
+          ...movie.payload.doc.data() as any
+        } as Movie;
+      })
+    })
+  }
 
-  read() {
-    
+  goToRegister(movie: Movie) {
+    this.router.navigateByUrl("/app-register-movie", {state: {movie: movie}})
   }
 
 }
