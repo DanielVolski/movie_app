@@ -14,7 +14,7 @@ export class ViewMoviePage implements OnInit {
   title!: string;
   director!: string;
   writer!: string;
-  releaseDate!: string;
+  releaseDate!: Date;
   genres: string[] = [];
   constructor(
     private router: Router,
@@ -27,7 +27,7 @@ export class ViewMoviePage implements OnInit {
     this.title = this.movie.title;
     this.director = this.movie.director;
     this.writer = this.movie.writer;
-    this.releaseDate = this.movie.releaseDate.toString();
+    this.releaseDate = this.movie.releaseDate;
     this.genres = this.movie.genres;
   }
 
