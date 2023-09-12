@@ -14,15 +14,14 @@ export class RegisterMoviePage implements OnInit {
   title!: string;
   director!: string;
   writer!: string;
-  releaseDate!: string;
+  releaseDate!: Date;
   genres: string[] = [];
 
   constructor(private router: Router, private firebase: FirebaseService, private alertController: AlertController) { }
 
   create() {
     if (this.title && this.director && this.writer && this.genres.length > 0) {
-      let releaseDate = new Date(this.releaseDate);
-      this.firebase.create(new Movie(this.title, this.director, this.writer, releaseDate, this.genres));
+      this.firebase.create(new Movie(this.title, this.director, this.writer, this.releaseDate, this.genres));
       this.router.navigate(["/home"]);
     } else {
       this.presentAlert("Error", "Empty fields", "All the fields needs to be filled!");
