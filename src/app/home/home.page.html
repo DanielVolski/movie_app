@@ -14,11 +14,11 @@
   <div id="container start">
    <ion-list *ngFor="let movie of movies">
       <ion-item>
-        <ion-card (click)="goToEdit(movie)" style="width: 100%;">
+        <ion-card id="card" (click)="goToEdit(movie)" style="width: 100%;">
           <ion-card-header>
             <ion-card-title>{{movie.title}}</ion-card-title>
           </ion-card-header>
-          <ion-card-content>Writer</ion-card-content>
+          <ion-card-content>{{movie.genres}}</ion-card-content>
         </ion-card>
       </ion-item>
    </ion-list>
