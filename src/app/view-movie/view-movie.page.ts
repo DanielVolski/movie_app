@@ -40,6 +40,8 @@ export class ViewMoviePage implements OnInit {
     } else {
       this.presentAlert("Error", "Empty fields", "All the fields needs to be filled!");
     }
+    this.presentAlert("Sucess", "The movie has been updated", "OK")
+    this.router.navigate(["/home"]);
   }
 
   delete() {
