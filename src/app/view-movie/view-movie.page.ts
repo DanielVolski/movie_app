@@ -39,23 +39,40 @@ export class ViewMoviePage implements OnInit {
       this.firebase.update(updated, this.movie.id);
       this.router.navigate(["/home"]);
     } else {
-      this.presentAlert("Error", "Empty fields", "All the fields needs to be filled!");
+      this.presentAlert("Error", "Empty fields", "All the fields needs to be filled!", ["OK"]);
     }
-    this.presentAlert("Sucess", "The movie has been updated", "OK")
+    this.presentAlert("Sucess", "The movie has been updated", "OK", ["OK"]);
     this.router.navigate(["/home"]);
   }
 
   delete() {
-    this.firebase.delete(this.movie.id);
-    this.router.navigate(["/home"]);
+    this.presentAlert(
+      "Warning", 
+      "You are deleting data", 
+      "Are you sure you want to delete this movie?",
+      [
+        {
+          text: 'No',
+          role: 'cancel'
+        },
+        {
+          text: 'Yes',
+          role: 'confirm',
+          handler: () => { 
+            this.firebase.delete(this.movie.id);
+            this.router.navigate(["/home"]);
+          },
+        }
+      ],
+    );
   }
 
-  private async presentAlert(header: string, subHeader: string, message: string) {
+  private async presentAlert(header: string, subHeader: string, message: string, buttons: any[]) {
     const alert = await this.alertController.create({
       header: header,
       subHeader: subHeader,
       message: message,
-      buttons: ['OK'],
+      buttons: buttons,
     });
 
     await alert.present();
