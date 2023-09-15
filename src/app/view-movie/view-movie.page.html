@@ -9,22 +9,25 @@
     <ion-toolbar>
       <ion-title size="large">Edit your movie</ion-title>
     </ion-toolbar>
+    <ion-item>
+      <ion-toggle (ionChange)="enableEdit()">Enable Editing</ion-toggle>
+    </ion-item>
   </ion-header>
   <ion-list>
     <ion-item>
-      <ion-input label="Movie title" labelPlacement="stacked" placeholder="Type the title of the movie" [(ngModel)]="title"></ion-input>
+      <ion-input disabled="{{canEdit}}" label="Movie title" labelPlacement="stacked" placeholder="Type the title of the movie" [(ngModel)]="title"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input label="Director name" labelPlacement="stacked" placeholder="Type the name of the director" [(ngModel)]="director"></ion-input>
+      <ion-input disabled="{{canEdit}}" label="Director name" labelPlacement="stacked" placeholder="Type the name of the director" [(ngModel)]="director"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input label="Writer name" labelPlacement="stacked" placeholder="Type the name of the writer" [(ngModel)]="writer"></ion-input>
+      <ion-input disabled="{{canEdit}}" label="Writer name" labelPlacement="stacked" placeholder="Type the name of the writer" [(ngModel)]="writer"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input label="Release date" type="date" labelPlacement="stacked" placeholder="Type the release date" [(ngModel)]="releaseDate"></ion-input>
+      <ion-input disabled="{{canEdit}}" label="Release date" type="date" labelPlacement="stacked" placeholder="Type the release date" [(ngModel)]="releaseDate"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-select label="Genres" labelPlacement="stacked" [multiple]="true" [(ngModel)]="genres">
+      <ion-select disabled="{{canEdit}}" label="Genres" labelPlacement="stacked" [multiple]="true" [(ngModel)]="genres">
         <ion-select-option value="Action">Action</ion-select-option>
         <ion-select-option value="Adventure">Adventure</ion-select-option>
         <ion-select-option value="Comedy">Comedy</ion-select-option>
@@ -37,6 +40,6 @@
       </ion-select>
     </ion-item>
   </ion-list>
-  <ion-button (click)="edit()" expand="block">Edit</ion-button>
-  <ion-button (click)="delete()" expand="block" color="danger">Delete</ion-button>
+  <ion-button disabled="{{canEdit}}" (click)="edit()" expand="block">Edit</ion-button>
+  <ion-button disabled="{{canEdit}}" (click)="delete()" expand="block" color="danger">Delete</ion-button>
 </ion-content>

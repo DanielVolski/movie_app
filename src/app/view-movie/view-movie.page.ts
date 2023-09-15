@@ -16,6 +16,7 @@ export class ViewMoviePage implements OnInit {
   writer!: string;
   releaseDate!: string;
   genres: string[] = [];
+  canEdit: boolean = true;
   constructor(
     private router: Router,
     private firebase: FirebaseService,
@@ -32,15 +33,20 @@ export class ViewMoviePage implements OnInit {
   }
 
   edit() {
-    if (this.title && this.director && this.writer && this.genres.length > 0) {
+    if (this.title && this.director && this.writer && this.genres.length > 0 && this.releaseDate != null ) {
       let updated: Movie = new Movie(this.title, this.director, this.writer, this.releaseDate, this.genres)
       this.firebase.update(updated, this.movie.id);
+      this.presentAlert("Sucess", "The movie has been updated", "OK", ["OK"]);
       this.router.navigate(["/home"]);
     } else {
       this.presentAlert("Error", "Empty fields", "All the fields needs to be filled!", ["OK"]);
+      this.movie = history.state.movie;
+      this.title = this.movie.title;
+      this.director = this.movie.director;
+      this.writer = this.movie.writer;
+      this.releaseDate = this.movie.releaseDate;
+      this.genres = this.movie.genres;
     }
-    this.presentAlert("Sucess", "The movie has been updated", "OK", ["OK"]);
-    this.router.navigate(["/home"]);
   }
 
   delete() {
@@ -78,5 +84,9 @@ export class ViewMoviePage implements OnInit {
 
   backToHome() {
     this.router.navigate(["/home"])
+  }
+
+  enableEdit() {
+    this.canEdit = this.canEdit ? false : true;
   }
 }
