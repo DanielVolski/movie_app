@@ -14,7 +14,7 @@ export class ViewMoviePage implements OnInit {
   title!: string;
   director!: string;
   writer!: string;
-  releaseDate!: Date;
+  releaseDate!: string;
   genres: string[] = [];
   constructor(
     private router: Router,
@@ -29,13 +29,11 @@ export class ViewMoviePage implements OnInit {
     this.writer = this.movie.writer;
     this.releaseDate = this.movie.releaseDate;
     this.genres = this.movie.genres;
-    console.log(this.movie.releaseDate.getUTCFullYear);
   }
 
   edit() {
     if (this.title && this.director && this.writer && this.genres.length > 0) {
-      let releaseDate = new Date(this.releaseDate);
-      let updated: Movie = new Movie(this.title, this.director, this.writer, releaseDate, this.genres)
+      let updated: Movie = new Movie(this.title, this.director, this.writer, this.releaseDate, this.genres)
       this.firebase.update(updated, this.movie.id);
       this.router.navigate(["/home"]);
     } else {

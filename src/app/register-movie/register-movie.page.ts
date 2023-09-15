@@ -14,7 +14,7 @@ export class RegisterMoviePage implements OnInit {
   title!: string;
   director!: string;
   writer!: string;
-  releaseDate!: Date;
+  releaseDate!: string;
   genres: string[] = [];
 
   constructor(private router: Router, private firebase: FirebaseService, private alertController: AlertController) { }

@@ -3,10 +3,10 @@ export class Movie {
     private _title: string;
     private _director: string;
     private _writer: string;
-    private _releaseDate: Date;
+    private _releaseDate: string;
     private _genres: string[] = [];
 
-    constructor(title: string, director: string, writer: string, date: Date, genres: string[]) {
+    constructor(title: string, director: string, writer: string, date: string, genres: string[]) {
         this._title = title;
         this._director = director;
         this._writer = writer;
@@ -45,11 +45,11 @@ export class Movie {
 		this._writer = value;
 	}
 
-	public get releaseDate(): Date {
+	public get releaseDate(): string {
 		return this._releaseDate;
 	}
 
-	public set releaseDate(value: Date) {
+	public set releaseDate(value: string) {
 		this._releaseDate = value;
 	}
 
