@@ -12,17 +12,29 @@
   </ion-header>
 
   <div id="container start">
-   <ion-list *ngFor="let movie of movies">
-      <ion-item>
-        <ion-card id="card" (click)="goToEdit(movie)" style="width: 100%;">
-          <ion-card-header>
-            <ion-card-title>{{movie.title}}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>{{movie.genres}}</ion-card-content>
-          <ion-card-content>{{movie.writer}}</ion-card-content>
+    <ion-list *ngFor="let movie of movies">
+      <ion-item lines="none">
+        <ion-card class="card" (click)="goToEdit(movie)" style="width: 100%">
+          <div class="info">
+            <ion-card-header>
+              <ion-card-title>{{movie.title}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="genres">
+              <ion-text class="text" *ngFor="let genres of movie.genres">
+                {{genres}}
+              </ion-text>
+            </ion-card-content>
+            <ion-card-content>{{movie.writer}}</ion-card-content>
+          </div>
+          <div class="image">
+            <img
+              alt="Silhouette of mountains"
+              src="./../../assets/poster/cartaz-beleza-americana.jpg"
+            />
+          </div>
         </ion-card>
       </ion-item>
-   </ion-list>
+    </ion-list>
   </div>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="goToRegister()">
@@ -30,4 +42,3 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
-
