@@ -2,20 +2,6 @@ img {
   border-radius: 10px;
 }
 
-.text {
-  font-size: 12px;
-  font-weight: bold;
-  border-style: solid;
-  border-color: #8c8c8c;
-  border-radius: 10px;
-  border-width: thin;
-  padding: 2%;
-  margin: 2%;
-  background-color: #8c8c8c;
-  color: #1c1c1d;
-  white-space: nowrap;
-}
-
 #container {
   text-align: center;
   border-radius: 10px;
@@ -44,6 +30,19 @@ img {
   text-decoration: none;
 }
 
+.text {
+  font-size: 12px;
+  font-weight: bold;
+  border-style: solid;
+  border-color: #8c8c8c;
+  border-radius: 10px;
+  border-width: thin;
+  background-color: #8c8c8c;
+  color: #1c1c1d;
+  margin: 0 2px 2px 2px;
+  padding: 2px;
+}
+
 .info {
   width: 60%;
 }
@@ -54,8 +53,10 @@ img {
 }
 
 .genres {
-  overflow-wrap: break;
-  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: space-between;
 }
 
 .card {
