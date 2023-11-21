@@ -41,7 +41,9 @@ export class ViewMoviePage implements OnInit {
   edit() {
     if (this.title && this.director && this.writer && this.genres.length > 0 && this.releaseDate != null ) {
       let updated: Movie = new Movie(this.title, this.director, this.writer, this.releaseDate, this.genres)
-      this.firebase.update(updated, this.movie.id);
+      this.movie = history.state.movie;
+      updated.id = this.movie.id;
+      this.firebase.uploadMovie(this.image, updated);
       this.presentAlert("Sucess", "The movie has been updated", "OK", ["OK"]);
       this.router.navigate(["/home"]);
     } else {
