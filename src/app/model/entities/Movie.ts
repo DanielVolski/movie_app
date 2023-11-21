@@ -5,7 +5,7 @@ export class Movie {
     private _writer: string;
     private _releaseDate: string;
     private _genres: string[] = [];
-	private _downloadURL: string = "";
+	private _downloadURL: any = null;
 
     constructor(title: string, director: string, writer: string, date: string, genres: string[]) {
 		this._title = title;

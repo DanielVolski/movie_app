@@ -17,7 +17,7 @@ export class ViewMoviePage implements OnInit {
   releaseDate!: string;
   genres: string[] = [];
   canEdit: boolean = true;
-  public image: any;
+  public poster: any;
 
   constructor(
     private router: Router,
@@ -32,10 +32,11 @@ export class ViewMoviePage implements OnInit {
     this.writer = this.movie.writer;
     this.releaseDate = this.movie.releaseDate;
     this.genres = this.movie.genres;
+    this.poster = this.movie.downloadURL;
   }
 
   uploadFile(image: any) {
-    this.image = image.files;
+    this.poster = image.files;
   }
 
   edit() {
@@ -43,7 +44,11 @@ export class ViewMoviePage implements OnInit {
       let updated: Movie = new Movie(this.title, this.director, this.writer, this.releaseDate, this.genres)
       this.movie = history.state.movie;
       updated.id = this.movie.id;
-      this.firebase.uploadMovie(this.image, updated);
+      updated.downloadURL = this.movie.downloadURL;
+      if (this.poster == null) {
+        this.poster = this.movie.downloadURL;
+      }
+      this.firebase.uploadMovie(this.poster, updated);
       this.presentAlert("Sucess", "The movie has been updated", "OK", ["OK"]);
       this.router.navigate(["/home"]);
     } else {

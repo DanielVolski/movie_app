@@ -26,11 +26,8 @@
             </ion-card-content>
             <ion-card-content>{{movie.writer}}</ion-card-content>
           </div>
-          <div class="image">
-            <img
-              alt="Silhouette of mountains"
-              src="./../../assets/poster/cartaz-beleza-americana.jpg"
-            />
+          <div *ngIf="movie.downloadURL != null " class="image">
+            <img alt="Poster of {{movie.title}}" src="{{movie.downloadURL}}" />
           </div>
         </ion-card>
       </ion-item>

@@ -54,7 +54,7 @@ export class FirebaseService {
             let uploadFileURL = fileRef.getDownloadURL();
             uploadFileURL.subscribe((url) => {
               movie.downloadURL = url;
-              if (!movie.id != null) {
+              if (movie.id == null) {
                 this.create(movie);
               } else {
                 this.update(movie, movie.id);
@@ -65,7 +65,6 @@ export class FirebaseService {
         .subscribe();
     }
     else {
-      movie.downloadURL = "";
       if (movie.id == null) {
         this.create(movie);
       } else {
