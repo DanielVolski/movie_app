@@ -17,6 +17,8 @@ export class ViewMoviePage implements OnInit {
   releaseDate!: string;
   genres: string[] = [];
   canEdit: boolean = true;
+  public image: any;
+
   constructor(
     private router: Router,
     private firebase: FirebaseService,
@@ -30,6 +32,10 @@ export class ViewMoviePage implements OnInit {
     this.writer = this.movie.writer;
     this.releaseDate = this.movie.releaseDate;
     this.genres = this.movie.genres;
+  }
+
+  uploadFile(image: any) {
+    this.image = image.files;
   }
 
   edit() {

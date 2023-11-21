@@ -16,8 +16,13 @@ export class RegisterMoviePage implements OnInit {
   writer!: string;
   releaseDate!: string;
   genres: string[] = [];
+  public image: any;
 
   constructor(private router: Router, private firebase: FirebaseService, private alertController: AlertController) { }
+
+  uploadFile(image: any) {
+    this.image = image.files;
+  }
 
   create() {
     if (this.title && this.director && this.writer && this.genres.length > 0) {

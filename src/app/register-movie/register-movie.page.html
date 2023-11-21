@@ -36,6 +36,11 @@
         <ion-select-option value="Thriller">Thriller</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-item>
+      <ion-button size="default" color="sucess" shape="round" disabled="{{canEdit}}">
+        <input type="file" (change)="uploadFile($event.target)" />
+      </ion-button>
+    </ion-item>
   </ion-list>
   <ion-button (click)="create()" expand="block">Register</ion-button>
 </ion-content>
