@@ -18,7 +18,11 @@ export class RegisterMoviePage implements OnInit {
   genres: string[] = [];
   public image: any;
 
-  constructor(private router: Router, private firebase: FirebaseService, private alertController: AlertController) { }
+  constructor(
+    private router: Router,
+    private firebase: FirebaseService,
+    private alertController: AlertController
+  ) {}
 
   uploadFile(image: any) {
     this.image = image.files;
@@ -26,15 +30,31 @@ export class RegisterMoviePage implements OnInit {
 
   create() {
     if (this.title && this.director && this.writer && this.genres.length > 0) {
-      this.firebase.create(new Movie(this.title, this.director, this.writer, this.releaseDate, this.genres));
-      this.router.navigate(["/home"]);
+      this.firebase.uploadMovie(
+        this.image,
+        new Movie(
+          this.title,
+          this.director,
+          this.writer,
+          this.releaseDate,
+          this.genres
+        )
+      );
+      this.router.navigate(['/home']);
     } else {
-      this.presentAlert("Error", "Empty fields", "All the fields needs to be filled!");
+      this.presentAlert(
+        'Error',
+        'Empty fields',
+        'All the fields needs to be filled!'
+      );
     }
   }
 
-
-  private async presentAlert(header: string, subHeader: string, message: string) {
+  private async presentAlert(
+    header: string,
+    subHeader: string,
+    message: string
+  ) {
     const alert = await this.alertController.create({
       header: header,
       subHeader: subHeader,
@@ -45,8 +65,5 @@ export class RegisterMoviePage implements OnInit {
     await alert.present();
   }
 
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

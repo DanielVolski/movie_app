@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Movie } from '../entities/Movie';
 import { finalize } from 'rxjs';
-import { AngularFireStorage} from '@angular/fire/compat/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirebaseService {
   private PATH: string = 'movies';
@@ -13,7 +13,7 @@ export class FirebaseService {
   constructor(
     private firestore: AngularFirestore,
     private storage: AngularFireStorage
-    ) { }
+  ) {}
 
   create(movie: Movie) {
     return this.firestore.collection(this.PATH).add({
@@ -22,6 +22,7 @@ export class FirebaseService {
       writer: movie.writer,
       releaseDate: movie.releaseDate,
       genres: movie.genres,
+      downloadURL: movie.downloadURL,
     });
   }
 
@@ -32,32 +33,45 @@ export class FirebaseService {
       writer: movie.writer,
       releaseDate: movie.releaseDate,
       genres: movie.genres,
+      downloadURL: movie.downloadURL,
     });
   }
 
-  uploadImage(image: any, movie: Movie) {
-    const file = image.item(0);
-    if (file.type.split('/')[0] !== 'image') {
-      console.error("File type is not supported!");
-      return;
+  uploadMovie(image: any, movie: Movie) {
+    if (image != null) {
+      const file = image.item(0);
+      if (file.type.split('/')[0] !== 'image') {
+        console.error('File type is not supported!');
+        return;
+      }
+      const path = `movies/${movie.title}_${new Date().getTime()}`;
+      const fileRef = this.storage.ref(path);
+      let task = this.storage.upload(path, file);
+      task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            let uploadFileURL = fileRef.getDownloadURL();
+            uploadFileURL.subscribe((url) => {
+              movie.downloadURL = url;
+              if (!movie.id != null) {
+                this.create(movie);
+              } else {
+                this.update(movie, movie.id);
+              }
+            });
+          })
+        )
+        .subscribe();
     }
-    const path = `movies/${movie.title}_${new Date().getTime()}`;
-    const fileRef = this.storage.ref(path);
-    let task = this.storage.upload(path, file);
-    task.snapshotChanges().pipe(
-      finalize(() => {  
-        let uploadFileURL = fileRef.getDownloadURL();
-        uploadFileURL.subscribe(url => {
-          movie.downloadURL = url;
-          if (!movie.id != null) {
-            this.create(movie);
-          }
-          else {
-            this.update(movie, movie.id);
-          }
-        });
-      })
-    ).subscribe();
+    else {
+      movie.downloadURL = "";
+      if (movie.id == null) {
+        this.create(movie);
+      } else {
+        this.update(movie, movie.id);
+      }
+    }
   }
 
   delete(id: string) {
