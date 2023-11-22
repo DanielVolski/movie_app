@@ -43,15 +43,6 @@ img {
   padding: 2px;
 }
 
-.info {
-  width: 60%;
-}
-
-.image {
-  width: 40%;
-  padding: auto;
-}
-
 .genres {
   display: flex;
   flex-wrap: wrap;
@@ -63,6 +54,14 @@ img {
   justify-content: center;
   align-items: center;
   padding-right: 5%;
+  .info {
+    min-width: 60%;
+    max-width: 100%;
+  }
+  .image {
+    width: 40%;
+    padding: auto;
+  }
 }
 
 ion-fab-button::part(native) {

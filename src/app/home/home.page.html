@@ -26,7 +26,7 @@
             </ion-card-content>
             <ion-card-content>{{movie.writer}}</ion-card-content>
           </div>
-          <div *ngIf="movie.downloadURL != null " class="image">
+          <div class="image" *ngIf="movie.downloadURL != null ">
             <img alt="Poster of {{movie.title}}" src="{{movie.downloadURL}}" />
           </div>
         </ion-card>
