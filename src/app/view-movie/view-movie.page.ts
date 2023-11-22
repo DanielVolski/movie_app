@@ -23,7 +23,7 @@ export class ViewMoviePage implements OnInit {
     private router: Router,
     private firebase: FirebaseService,
     private alertController: AlertController
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.movie = history.state.movie;
@@ -32,7 +32,6 @@ export class ViewMoviePage implements OnInit {
     this.writer = this.movie.writer;
     this.releaseDate = this.movie.releaseDate;
     this.genres = this.movie.genres;
-    this.poster = this.movie.downloadURL;
   }
 
   uploadFile(image: any) {
@@ -40,19 +39,37 @@ export class ViewMoviePage implements OnInit {
   }
 
   edit() {
-    if (this.title && this.director && this.writer && this.genres.length > 0 && this.releaseDate != null ) {
-      let updated: Movie = new Movie(this.title, this.director, this.writer, this.releaseDate, this.genres)
+    if (
+      this.title &&
+      this.director &&
+      this.writer &&
+      this.genres.length > 0 &&
+      this.releaseDate != null
+    ) {
+      let updated: Movie = new Movie(
+        this.title,
+        this.director,
+        this.writer,
+        this.releaseDate,
+        this.genres
+      );
       this.movie = history.state.movie;
       updated.id = this.movie.id;
-      updated.downloadURL = this.movie.downloadURL;
-      if (this.poster == null) {
-        this.poster = this.movie.downloadURL;
+      if (this.poster) {
+        this.firebase.uploadMovie(this.poster, updated);
+      } else {
+        updated.downloadURL = this.movie.downloadURL;
+        this.firebase.uploadMovie(null, updated);
       }
-      this.firebase.uploadMovie(this.poster, updated);
-      this.presentAlert("Sucess", "The movie has been updated", "OK", ["OK"]);
-      this.router.navigate(["/home"]);
+      this.presentAlert('Sucess', 'The movie has been updated', '', ['OK']);
+      this.router.navigate(['/home']);
     } else {
-      this.presentAlert("Error", "Empty fields", "All the fields needs to be filled!", ["OK"]);
+      this.presentAlert(
+        'Error',
+        'Empty fields',
+        'All the fields needs to be filled!',
+        ['OK']
+      );
       this.movie = history.state.movie;
       this.title = this.movie.title;
       this.director = this.movie.director;
@@ -64,27 +81,32 @@ export class ViewMoviePage implements OnInit {
 
   delete() {
     this.presentAlert(
-      "Warning", 
-      "You are deleting data", 
-      "Are you sure you want to delete this movie?",
+      'Warning',
+      'You are deleting data',
+      'Are you sure you want to delete this movie?',
       [
         {
           text: 'No',
-          role: 'cancel'
+          role: 'cancel',
         },
         {
           text: 'Yes',
           role: 'confirm',
-          handler: () => { 
+          handler: () => {
             this.firebase.delete(this.movie.id);
-            this.router.navigate(["/home"]);
+            this.router.navigate(['/home']);
           },
-        }
-      ],
+        },
+      ]
     );
   }
 
-  private async presentAlert(header: string, subHeader: string, message: string, buttons: any[]) {
+  private async presentAlert(
+    header: string,
+    subHeader: string,
+    message: string,
+    buttons: any[]
+  ) {
     const alert = await this.alertController.create({
       header: header,
       subHeader: subHeader,
@@ -96,7 +118,7 @@ export class ViewMoviePage implements OnInit {
   }
 
   backToHome() {
-    this.router.navigate(["/home"])
+    this.router.navigate(['/home']);
   }
 
   enableEdit() {
