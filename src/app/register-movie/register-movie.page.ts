@@ -21,7 +21,7 @@ export class RegisterMoviePage implements OnInit {
   constructor(
     private router: Router,
     private firebase: FirebaseService,
-    private alertController: AlertController
+    private alertController: AlertController,
   ) {}
 
   uploadFile(image: any) {

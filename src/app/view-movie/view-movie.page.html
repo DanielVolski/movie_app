@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>Edit your movie</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,25 +12,56 @@
     <ion-toolbar>
       <ion-title size="large">Edit your movie</ion-title>
     </ion-toolbar>
-    <ion-item>
-      <ion-toggle (ionChange)="enableEdit()">Enable Editing</ion-toggle>
-    </ion-item>
   </ion-header>
   <ion-list>
     <ion-item>
-      <ion-input disabled="{{canEdit}}" label="Movie title" labelPlacement="stacked" placeholder="Type the title of the movie" [(ngModel)]="title"></ion-input>
+      <ion-toggle (ionChange)="enableEdit()">Enable Editing</ion-toggle>
     </ion-item>
     <ion-item>
-      <ion-input disabled="{{canEdit}}" label="Director name" labelPlacement="stacked" placeholder="Type the name of the director" [(ngModel)]="director"></ion-input>
+      <ion-input
+        disabled="{{canEdit}}"
+        label="Movie title"
+        labelPlacement="stacked"
+        placeholder="Type the title of the movie"
+        [(ngModel)]="title"
+      ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input disabled="{{canEdit}}" label="Writer name" labelPlacement="stacked" placeholder="Type the name of the writer" [(ngModel)]="writer"></ion-input>
+      <ion-input
+        disabled="{{canEdit}}"
+        label="Director name"
+        labelPlacement="stacked"
+        placeholder="Type the name of the director"
+        [(ngModel)]="director"
+      ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input disabled="{{canEdit}}" label="Release date" type="date" labelPlacement="stacked" placeholder="Type the release date" [(ngModel)]="releaseDate"></ion-input>
+      <ion-input
+        disabled="{{canEdit}}"
+        label="Writer name"
+        labelPlacement="stacked"
+        placeholder="Type the name of the writer"
+        [(ngModel)]="writer"
+      ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-select disabled="{{canEdit}}" label="Genres" labelPlacement="stacked" [multiple]="true" [(ngModel)]="genres">
+      <ion-input
+        disabled="{{canEdit}}"
+        label="Release date"
+        type="date"
+        labelPlacement="stacked"
+        placeholder="Type the release date"
+        [(ngModel)]="releaseDate"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select
+        disabled="{{canEdit}}"
+        label="Genres"
+        labelPlacement="stacked"
+        [multiple]="true"
+        [(ngModel)]="genres"
+      >
         <ion-select-option value="Action">Action</ion-select-option>
         <ion-select-option value="Adventure">Adventure</ion-select-option>
         <ion-select-option value="Comedy">Comedy</ion-select-option>
@@ -35,7 +69,9 @@
         <ion-select-option value="Drama">Drama</ion-select-option>
         <ion-select-option value="Horror">Horror</ion-select-option>
         <ion-select-option value="Romance">Romance</ion-select-option>
-        <ion-select-option value="Science Fiction">Science Fiction</ion-select-option>
+        <ion-select-option value="Science Fiction"
+          >Science Fiction</ion-select-option
+        >
         <ion-select-option value="Thriller">Thriller</ion-select-option>
       </ion-select>
     </ion-item>
@@ -43,11 +79,24 @@
       <img src="{{this.movie.downloadURL}}" width="100%" height="100%" />
     </ion-item>
     <ion-item>
-      <ion-button size="default" color="sucess" shape="round" disabled="{{canEdit}}">
+      <ion-button
+        size="default"
+        color="sucess"
+        shape="round"
+        disabled="{{canEdit}}"
+      >
         <input type="file" (change)="uploadFile($event.target)" />
       </ion-button>
     </ion-item>
   </ion-list>
-  <ion-button disabled="{{canEdit}}" (click)="edit()" expand="block">Edit</ion-button>
-  <ion-button disabled="{{canEdit}}" (click)="delete()" expand="block" color="danger">Delete</ion-button>
+  <ion-button disabled="{{canEdit}}" (click)="edit()" expand="block"
+    >Edit</ion-button
+  >
+  <ion-button
+    disabled="{{canEdit}}"
+    (click)="delete()"
+    expand="block"
+    color="danger"
+    >Delete</ion-button
+  >
 </ion-content>
