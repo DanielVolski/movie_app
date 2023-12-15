@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./home/home.module').then((m) => m.HomePageModule),
+      import('./views/home/home.module').then((m) => m.HomePageModule),
   },
   {
     path: 'register-movie',
@@ -25,6 +25,14 @@ const routes: Routes = [
       import('./view-movie/view-movie.module').then(
         (m) => m.ViewMoviePageModule
       ),
+  },
+  {
+    path: 'signin',
+    loadChildren: () => import('./views/auth/signin/signin.module').then( m => m.SigninPageModule)
+  },
+  {
+    path: 'signup',
+    loadChildren: () => import('./views/auth/signup/signup.module').then( m => m.SignupPageModule)
   },
 ];
 
