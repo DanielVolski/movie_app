@@ -1,13 +1,34 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>signin</ion-title>
+    <ion-title>Logar</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">signin</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <form [formGroup]="formLogar" (ngSubmit)="submitForm()">
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+    <!-- Mensagem de erro Email-->
+    <span *ngIf="formLogar.get('email')?.touched && formLogar.get('email')?.errors?.['required']">Email é obrigatório</span><br/>
+    <span *ngIf="formLogar.get('email')?.dirty && formLogar.get('email')?.errors?.['email']">Formato de email inválido</span>
+    <ion-item>
+      <ion-label position="floating">Senha</ion-label>
+      <ion-input type="password" formControlName="senha"></ion-input>
+    </ion-item>
+    <!-- Mensagem de erro Senha-->
+    <span *ngIf="formLogar.get('senha')?.touched && formLogar.get('senha')?.errors?.['required']">Senha é obrigatória</span><br/>
+    <span *ngIf="formLogar.get('senha')?.dirty && formLogar.get('senha')?.errors?.['minlength']">Senha precisa ter no mínimo seis dígitos</span>
+    <ion-button expand="full" color="success" type="submit">Entrar</ion-button>
+  </form>
+  <ion-button
+    expand="full"
+    color="danger"
+    type="submit"
+    (click)="logarComGoogle()"
+    >Entrar com Google <ion-icon slot="end" name="logo-google"></ion-icon
+  ></ion-button>
+  <a (click)="irParaSignUp()">Não tem cadastro? Clique Aqui!</a>
 </ion-content>
+  
