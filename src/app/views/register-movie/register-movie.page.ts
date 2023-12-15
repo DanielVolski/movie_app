@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FirebaseService } from '../model/services/firebase.service';
-import { Movie } from '../model/entities/Movie';
-import { AlertController } from '@ionic/angular';
+import { FirebaseService } from '../../model/services/firebase.service';
+import { Movie } from '../../model/entities/Movie';
+import { AlertService } from 'src/app/model/services/alert.service';
+import { AuthService } from 'src/app/model/services/auth.service';
 
 @Component({
   selector: 'app-register-movie',
@@ -17,12 +18,16 @@ export class RegisterMoviePage implements OnInit {
   releaseDate!: string;
   genres: string[] = [];
   public image: any;
+  public user: any;
 
   constructor(
     private router: Router,
     private firebase: FirebaseService,
-    private alertController: AlertController,
-  ) {}
+    private alert: AlertService,
+    private auth: AuthService
+  ) {
+    this.user = this.auth.getUserLogged();
+  }
 
   uploadFile(image: any) {
     this.image = image.files;
@@ -37,32 +42,14 @@ export class RegisterMoviePage implements OnInit {
           this.director,
           this.writer,
           this.releaseDate,
-          this.genres
+          this.genres,
+          this.user
         )
       );
       this.router.navigate(['/home']);
     } else {
-      this.presentAlert(
-        'Error',
-        'Empty fields',
-        'All the fields needs to be filled!'
-      );
+      this.alert.presentAlert("All the fields needs to be filled!", "Empty Fields")
     }
-  }
-
-  private async presentAlert(
-    header: string,
-    subHeader: string,
-    message: string
-  ) {
-    const alert = await this.alertController.create({
-      header: header,
-      subHeader: subHeader,
-      message: message,
-      buttons: ['OK'],
-    });
-
-    await alert.present();
   }
 
   ngOnInit() {}

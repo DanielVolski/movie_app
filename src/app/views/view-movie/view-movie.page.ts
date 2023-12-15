@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Movie } from '../model/entities/Movie';
+import { Movie } from '../../model/entities/Movie';
 import { Router } from '@angular/router';
-import { FirebaseService } from '../model/services/firebase.service';
+import { FirebaseService } from '../../model/services/firebase.service'
 import { AlertController } from '@ionic/angular';
+import { AuthService } from 'src/app/model/services/auth.service';
 
 @Component({
   selector: 'app-view-movie',
@@ -18,12 +19,16 @@ export class ViewMoviePage implements OnInit {
   genres: string[] = [];
   canEdit: boolean = true;
   public poster: any;
+  public user: any;
 
   constructor(
     private router: Router,
     private firebase: FirebaseService,
-    private alertController: AlertController
-  ) {}
+    private alertController: AlertController,
+    private auth: AuthService
+  ) {
+    this.user = this.auth.getUserLogged();
+  }
 
   ngOnInit() {
     this.movie = history.state.movie;
@@ -51,7 +56,8 @@ export class ViewMoviePage implements OnInit {
         this.director,
         this.writer,
         this.releaseDate,
-        this.genres
+        this.genres,
+        this.user.uid
       );
       this.movie = history.state.movie;
       updated.id = this.movie.id;

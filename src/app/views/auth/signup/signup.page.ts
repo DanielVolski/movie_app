@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/common/alert.service';
+import { AlertService } from 'src/app/model/services/alert.service';
 import { AuthService } from 'src/app/model/services/auth.service';
 
 @Component({
