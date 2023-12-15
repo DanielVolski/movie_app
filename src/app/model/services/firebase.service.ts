@@ -23,6 +23,7 @@ export class FirebaseService {
       releaseDate: movie.releaseDate,
       genres: movie.genres,
       downloadURL: movie.downloadURL,
+      uid: movie.uid
     });
   }
 
@@ -34,6 +35,7 @@ export class FirebaseService {
       releaseDate: movie.releaseDate,
       genres: movie.genres,
       downloadURL: movie.downloadURL,
+      uid: movie.uid
     });
   }
 
@@ -77,7 +79,8 @@ export class FirebaseService {
     return this.firestore.collection(this.PATH).doc(id).delete();
   }
 
-  read() {
-    return this.firestore.collection(this.PATH).snapshotChanges();
+  read(uid: string) {
+    return this.firestore.collection(this.PATH, ref => ref.where('uid', '==', uid)
+    ).snapshotChanges();
   }
 }
