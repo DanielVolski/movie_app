@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'signin',
     pathMatch: 'full',
   },
   {
@@ -15,14 +15,14 @@ const routes: Routes = [
   {
     path: 'register-movie',
     loadChildren: () =>
-      import('./register-movie/register-movie.module').then(
+      import('./views/register-movie/register-movie.module').then(
         (m) => m.RegisterMoviePageModule
       ),
   },
   {
     path: 'view-movie',
     loadChildren: () =>
-      import('./view-movie/view-movie.module').then(
+      import('./views/view-movie/view-movie.module').then(
         (m) => m.ViewMoviePageModule
       ),
   },
