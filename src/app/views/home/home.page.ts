@@ -18,8 +18,8 @@ export class HomePage{
     private firebase: FirebaseService,
     private auth: AuthService
   ) {
-    console.log(this.user.uid)
     this.user = this.auth.getUserLogged();
+    console.log(this.user.uid)
     this.firebase.read(this.user.uid).subscribe(res =>{
       this.movies = res.map(movie => {
         return {
