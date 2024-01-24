@@ -12,37 +12,46 @@
       <ion-title size="large">Register your movie</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-list>
-    <ion-item>
-      <ion-input label="Movie title" labelPlacement="stacked" placeholder="Type the title of the movie" [(ngModel)]="title"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input label="Director name" labelPlacement="stacked" placeholder="Type the name of the director" [(ngModel)]="director"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input label="Writer name" labelPlacement="stacked" placeholder="Type the name of the writer" [(ngModel)]="writer"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input label="Release date" type="date" labelPlacement="stacked" placeholder="Type the release date" [(ngModel)]="releaseDate"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-select label="Genres" labelPlacement="stacked" [multiple]="true" [(ngModel)]="genres">
-        <ion-select-option value="Action">Action</ion-select-option>
-        <ion-select-option value="Adventure">Adventure</ion-select-option>
-        <ion-select-option value="Comedy">Comedy</ion-select-option>
-        <ion-select-option value="Crime">Crime</ion-select-option>
-        <ion-select-option value="Drama">Drama</ion-select-option>
-        <ion-select-option value="Horror">Horror</ion-select-option>
-        <ion-select-option value="Romance">Romance</ion-select-option>
-        <ion-select-option value="Science Fiction">Science Fiction</ion-select-option>
-        <ion-select-option value="Thriller">Thriller</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-button size="default" color="sucess" shape="round">
-        <input type="file" (change)="uploadFile($event.target)" />
-      </ion-button>
-    </ion-item>
-  </ion-list>
-  <ion-button (click)="create()" expand="block">Register</ion-button>
+  <form [formGroup]="formMovie" (ngSubmit)="submitForm()">
+    <ion-list>
+      <ion-item>
+        <ion-input label="Movie title" labelPlacement="stacked" placeholder="Type the title of the movie" formControlName="title"></ion-input>
+      </ion-item>
+      <span *ngIf="formMovie.get('title')?.touched && formMovie.get('title')?.errors?.['required']">Title is required</span>
+      <ion-item>
+        <ion-input label="Director name" labelPlacement="stacked" placeholder="Type the name of the director" formControlName="director"></ion-input>
+      </ion-item>
+      <span *ngIf="formMovie.get('director')?.touched && formMovie.get('director')?.errors?.['required']">Director's name is required</span>
+      <ion-item>
+        <ion-input label="Writer name" labelPlacement="stacked" placeholder="Type the name of the writer" formControlName="writer"></ion-input>
+      </ion-item>
+      <span *ngIf="formMovie.get('writer')?.touched && formMovie.get('writer')?.errors?.['required']">Writer's name is required</span>
+      <ion-item>
+        <ion-input label="Release date" type="date" labelPlacement="stacked" placeholder="Type the release date" formControlName="releaseDate"></ion-input>
+      </ion-item>
+      <span *ngIf="formMovie.get('releaseDate')?.touched && formMovie.get('releaseDate')?.errors?.['required']">Release date is required</span>
+      <ion-item>
+        <ion-select label="Genres" labelPlacement="stacked" [multiple]="true" formControlName="genres">
+          <ion-select-option value="Action">Action</ion-select-option>
+          <ion-select-option value="Adventure">Adventure</ion-select-option>
+          <ion-select-option value="Comedy">Comedy</ion-select-option>
+          <ion-select-option value="Crime">Crime</ion-select-option>
+          <ion-select-option value="Drama">Drama</ion-select-option>
+          <ion-select-option value="Horror">Horror</ion-select-option>
+          <ion-select-option value="Romance">Romance</ion-select-option>
+          <ion-select-option value="Science Fiction">Science Fiction</ion-select-option>
+          <ion-select-option value="Thriller">Thriller</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span *ngIf="formMovie.get('genres')?.touched && formMovie.get('genres')?.errors?.['required']">Genre is required</span>
+      <ion-item>
+        <ion-button size="default" color="sucess" shape="round">
+          <input type="file" (change)="uploadFile($event.target)" />
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button type="submit" expand="block">Register</ion-button>
+      </ion-item>
+    </ion-list>
+  </form>
 </ion-content>

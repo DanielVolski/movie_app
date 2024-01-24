@@ -38,6 +38,7 @@ export class HomePage{
   }
 
   logout(){
+    
     this.auth.SignOut().then(res => {
       this.router.navigate(['signin']);
     })

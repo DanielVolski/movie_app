@@ -4,6 +4,7 @@ import { FirebaseService } from '../../model/services/firebase.service';
 import { Movie } from '../../model/entities/Movie';
 import { AlertService } from 'src/app/model/services/alert.service';
 import { AuthService } from 'src/app/model/services/auth.service';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register-movie',
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/model/services/auth.service';
   styleUrls: ['./register-movie.page.scss'],
 })
 export class RegisterMoviePage implements OnInit {
-  movie!: Movie;
+  formMovie: FormGroup;
   title!: string;
   director!: string;
   writer!: string;
@@ -24,9 +25,25 @@ export class RegisterMoviePage implements OnInit {
     private router: Router,
     private firebase: FirebaseService,
     private alert: AlertService,
-    private auth: AuthService
+    private auth: AuthService,
+    private formBuilder: FormBuilder
   ) {
     this.user = this.auth.getUserLogged();
+    this.formMovie = new FormGroup({
+      title: new FormControl(''),
+      director: new FormControl(''),
+      writer: new FormControl(''),
+      releaseDate: new FormControl(''),
+      genres: new FormArray([]),
+      uid: new FormControl('')
+    });
+  }
+
+  submitForm() {
+    if (!this.formMovie.valid)
+      return false;
+    this.create();
+    return true;
   }
 
   uploadFile(image: any) {
@@ -34,23 +51,27 @@ export class RegisterMoviePage implements OnInit {
   }
 
   create() {
-    if (this.title && this.director && this.writer && this.genres.length > 0) {
-      this.firebase.uploadMovie(
-        this.image,
-        new Movie(
-          this.title,
-          this.director,
-          this.writer,
-          this.releaseDate,
-          this.genres,
-          this.user.uid
-        )
-      );
-      this.router.navigate(['/home']);
-    } else {
-      this.alert.presentAlert("All the fields needs to be filled!", "Empty Fields")
-    }
+    this.firebase.uploadMovie(
+      this.image,
+      new Movie(
+        this.formMovie.value['title'],
+        this.formMovie.value['director'],
+        this.formMovie.value['writer'],
+        this.formMovie.value['releaseDate'],
+        this.formMovie.value['genres'],
+        this.user.uid
+      )
+    );
+    this.router.navigate(['/home']);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.formMovie = this.formBuilder.group({
+      title: ['', Validators.required],
+      director: ['', Validators.required],
+      writer: ['', Validators.required],
+      releaseDate: ['', Validators.required],
+      genres: ['', Validators.required],
+    });
+  }
 }
