@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   browserPopupRedirectResolver,
   GoogleAuthProvider,
+  GithubAuthProvider
 } from 'firebase/auth';
 
 @Injectable({
@@ -40,6 +41,12 @@ export class AuthService {
 
   public signInWithGoogle() {
     const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    return signInWithPopup(auth, provider, browserPopupRedirectResolver);
+  }
+
+  public signInWithGithub() {
+    const provider = new GithubAuthProvider();
     const auth = getAuth();
     return signInWithPopup(auth, provider, browserPopupRedirectResolver);
   }

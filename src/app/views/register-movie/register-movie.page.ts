@@ -43,7 +43,7 @@ export class RegisterMoviePage implements OnInit {
           this.writer,
           this.releaseDate,
           this.genres,
-          this.user
+          this.user.uid
         )
       );
       this.router.navigate(['/home']);

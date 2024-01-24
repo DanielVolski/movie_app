@@ -19,7 +19,6 @@ export class HomePage{
     private auth: AuthService
   ) {
     this.user = this.auth.getUserLogged();
-    console.log(this.user.uid)
     this.firebase.read(this.user.uid).subscribe(res =>{
       this.movies = res.map(movie => {
         return {
@@ -36,5 +35,11 @@ export class HomePage{
 
   goToEdit(movie: Movie) {
     this.router.navigateByUrl("/view-movie", {state: {movie: movie}});
+  }
+
+  logout(){
+    this.auth.SignOut().then(res => {
+      this.router.navigate(['signin']);
+    })
   }
 }
