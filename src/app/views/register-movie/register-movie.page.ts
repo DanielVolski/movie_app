@@ -13,11 +13,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 })
 export class RegisterMoviePage implements OnInit {
   formMovie: FormGroup;
-  title!: string;
-  director!: string;
-  writer!: string;
-  releaseDate!: string;
-  genres: string[] = [];
   public image: any;
   public user: any;
 

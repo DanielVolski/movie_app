@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Movie } from '../../model/entities/Movie';
 import { Router } from '@angular/router';
-import { FirebaseService } from '../../model/services/firebase.service'
+import { FirebaseService } from '../../model/services/firebase.service';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/model/services/auth.service';
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view-movie',
@@ -11,22 +12,32 @@ import { AuthService } from 'src/app/model/services/auth.service';
   styleUrls: ['./view-movie.page.scss'],
 })
 export class ViewMoviePage implements OnInit {
+  formMovie: FormGroup;
   movie!: Movie;
   title!: string;
   director!: string;
   writer!: string;
   releaseDate!: string;
   genres: string[] = [];
-  canEdit: boolean = true;
   public poster: any;
   public user: any;
+  public canEdit: boolean = false;
 
   constructor(
     private router: Router,
     private firebase: FirebaseService,
     private alertController: AlertController,
-    private auth: AuthService
+    private auth: AuthService,
+    private formBuilder: FormBuilder
   ) {
+    this.formMovie = new FormGroup({
+      title: new FormControl(''),
+      director: new FormControl(''),
+      writer: new FormControl(''),
+      releaseDate: new FormControl(''),
+      genres: new FormArray([]),
+      uid: new FormControl(''),
+    });
     this.user = this.auth.getUserLogged();
   }
 
@@ -37,20 +48,30 @@ export class ViewMoviePage implements OnInit {
     this.writer = this.movie.writer;
     this.releaseDate = this.movie.releaseDate;
     this.genres = this.movie.genres;
+    this.formMovie = this.formBuilder.group({
+      title: [this.title, [Validators.required]],
+      director: [this.director, [Validators.required]],
+      writer: [this.writer, [Validators.required]],
+      releaseDate: [this.releaseDate, [Validators.required]],
+      genres: [this.genres, [Validators.required]]
+    });
+  }
+
+  toggleEdit() {
+    this.canEdit = !this.canEdit;
   }
 
   uploadFile(image: any) {
     this.poster = image.files;
   }
 
+  submitForm() {
+    if (!this.formMovie.valid) return false;
+    this.edit();
+    return true;
+  }
+
   edit() {
-    if (
-      this.title &&
-      this.director &&
-      this.writer &&
-      this.genres.length > 0 &&
-      this.releaseDate != null
-    ) {
       let updated: Movie = new Movie(
         this.title,
         this.director,
@@ -69,20 +90,12 @@ export class ViewMoviePage implements OnInit {
       }
       this.presentAlert('Sucess', 'The movie has been updated', '', ['OK']);
       this.router.navigate(['/home']);
-    } else {
-      this.presentAlert(
-        'Error',
-        'Empty fields',
-        'All the fields needs to be filled!',
-        ['OK']
-      );
       this.movie = history.state.movie;
       this.title = this.movie.title;
       this.director = this.movie.director;
       this.writer = this.movie.writer;
       this.releaseDate = this.movie.releaseDate;
       this.genres = this.movie.genres;
-    }
   }
 
   delete() {
