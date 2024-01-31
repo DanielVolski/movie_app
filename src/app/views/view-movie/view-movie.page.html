@@ -14,40 +14,39 @@
     </ion-toolbar>
   </ion-header>
   <ion-item>
-    <ion-toggle (ionChange)="enableEdit()">Enable Editing</ion-toggle>
+    <ion-toggle (ionChange)="enableEdit()">
+
+    </ion-toggle>
   </ion-item>
   <form [formGroup]="formMovie" (ngSubmit)="submitForm()">
     <ion-list>
-      <ion-item>
+      <ion-item disabled="{{isDisabled}}">
         <ion-input
-          [disabled]="!canEdit"
+          id="title"
           label="Movie title"
           labelPlacement="stacked"
           placeholder="Type the title of the movie"
           formControlName="title"
         ></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item disabled="{{isDisabled}}">
         <ion-input
-        [disabled]="!canEdit"
           label="Director name"
           labelPlacement="stacked"
           placeholder="Type the name of the director"
           formControlName="director"
         ></ion-input>
-      </ion-item>
-      <ion-item>
+      </ion-item >
+      <ion-item disabled="{{isDisabled}}">
         <ion-input
-        [disabled]="!canEdit"
           label="Writer name"
           labelPlacement="stacked"
           placeholder="Type the name of the writer"
           formControlName="writer"
         ></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item disabled="{{isDisabled}}">
         <ion-input
-        [disabled]="!canEdit"
           label="Release date"
           type="date"
           labelPlacement="stacked"
@@ -55,9 +54,9 @@
           formControlName="releaseDate"
         ></ion-input>
       </ion-item>
-      <ion-item>
+      <span *ngIf="formMovie.get('releaseDate')?.touched && formMovie.get('releaseDate')?.errors?.['pattern']">Data Inválida</span>
+      <ion-item disabled="{{isDisabled}}">
         <ion-select
-        [disabled]="!canEdit"
           label="Genres"
           labelPlacement="stacked"
           [multiple]="true"
@@ -76,27 +75,25 @@
           <ion-select-option value="Thriller">Thriller</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item *ngIf="movie.downloadURL != null ">
+      <ion-item *ngIf="movie.downloadURL != null" >
         <img src="{{this.movie.downloadURL}}" width="100%" height="100%" />
       </ion-item>
-      <ion-item>
+      <ion-item disabled="{{isDisabled}}">
         <ion-button
           size="default"
           color="sucess"
           shape="round"
-
         >
           <input type="file" (change)="uploadFile($event.target)" />
         </ion-button>
       </ion-item>
     </ion-list>
   </form>
-  <ion-button  (click)="edit()" expand="block"
+  <ion-button  (click)="edit()" expand="block" [disabled]="isDisabled" color="primary"
     >Edit</ion-button
   >
-  <ion-button
-
-    (click)="delete()"
+  <ion-button [disabled]="isDisabled"
+  (click)="delete()"
     expand="block"
     color="danger"
     >Delete</ion-button
