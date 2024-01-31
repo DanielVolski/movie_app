@@ -11,6 +11,7 @@ import {
   FormArray,
   Validators
 } from '@angular/forms';
+import { AlertService } from 'src/app/model/services/alert.service';
 
 @Component({
   selector: 'app-view-movie',
@@ -26,7 +27,7 @@ export class ViewMoviePage implements OnInit {
   constructor(
     private router: Router,
     private firebase: FirebaseService,
-    private alertController: AlertController,
+    private alertService: AlertService,
     private auth: AuthService,
     private formBuilder: FormBuilder
   ) {
@@ -47,10 +48,9 @@ export class ViewMoviePage implements OnInit {
       title: [this.movie.title, [Validators.required]],
       director: [this.movie.director, [Validators.required]],
       writer: [this.movie.writer, [Validators.required]],
-      releaseDate: [this.movie.releaseDate, [Validators.required, Validators.pattern('^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/((19|20)\d\d)$')]],
+      releaseDate: [this.movie.releaseDate, [Validators.required]],
       genres: [this.movie.genres, [Validators.required]],
     });
-    console.log("aaaaaaaaaa");
   }
 
   uploadFile(image: any) {
@@ -72,7 +72,6 @@ export class ViewMoviePage implements OnInit {
       this.formMovie.value.genres,
       this.user.uid
     );
-    console.log(updated);
     this.movie = history.state.movie;
     updated.id = this.movie.id;
     if (this.poster) {
@@ -81,49 +80,12 @@ export class ViewMoviePage implements OnInit {
       updated.downloadURL = this.movie.downloadURL;
       this.firebase.uploadMovie(null, updated);
     }
-    this.presentAlert('Sucess', 'The movie has been updated', '', ['OK']);
-    this.router.navigate(['/home']);
+    this.alertService.presentAlert('Sucess', 'The movie has been updated');
+    this.backToHome()
   }
 
-  // TODO: Remover present alert aqui
   delete() {
-    this.presentAlert(
-      'Warning',
-      'You are deleting data',
-      'Are you sure you want to delete this movie?',
-      [
-        {
-          text: 'No',
-          role: 'cancel',
-        },
-        {
-          text: 'Yes',
-          role: 'confirm',
-          handler: () => {
-            this.firebase.delete(this.movie.id);
-            this.router.navigate(['/home']);
-          },
-        },
-      ]
-    );
-  }
-
-
-
-  private async presentAlert(
-    header: string,
-    subHeader: string,
-    message: string,
-    buttons: any[]
-    ) {
-    const alert = await this.alertController.create({
-      header: header,
-      subHeader: subHeader,
-      message: message,
-      buttons: buttons,
-    });
-
-    await alert.present();
+    this.alertService.deleteMovieAlert(this.movie.id);
   }
 
   backToHome() {

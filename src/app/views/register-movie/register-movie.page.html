@@ -61,8 +61,10 @@
       </ion-item>
       <span
         *ngIf="formMovie.get('releaseDate')?.touched && formMovie.get('releaseDate')?.errors?.['required']"
-        >Release date is required</span
-      >
+        >Release date is required</span>
+      <span
+        *ngIf="formMovie.get('releaseDate')?.hasError('pattern')"
+        >Invalid date</span>
       <ion-item>
         <ion-select
           label="Genres"

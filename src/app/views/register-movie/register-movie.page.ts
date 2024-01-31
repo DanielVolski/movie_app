@@ -65,7 +65,7 @@ export class RegisterMoviePage implements OnInit {
       title: ['', Validators.required],
       director: ['', Validators.required],
       writer: ['', Validators.required],
-      releaseDate: ['', Validators.required],
+      releaseDate: ['', [Validators.required]],
       genres: ['', Validators.required],
     });
   }
