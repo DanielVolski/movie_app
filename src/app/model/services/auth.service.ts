@@ -63,12 +63,8 @@ export class AuthService {
   }
 
   public getUserLogged() {
-    const user: any = JSON.parse(localStorage.getItem('user') || 'null');
-    if (user != null) {
-      return user;
-    } else {
-      return null;
-    }
+    console.log(getAuth().currentUser);
+    return getAuth().currentUser;
   }
 
   public isLoggedIn(): boolean {

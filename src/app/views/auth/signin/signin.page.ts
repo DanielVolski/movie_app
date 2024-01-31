@@ -55,25 +55,28 @@ export class SigninPage implements OnInit {
     }
   }
 
-  private logar() {
-    this.authService
-      .signInWithEmailAndPassword(
-        this.formLogar.value['email'],
-        this.formLogar.value['senha']
-      )
-      .then((res) => {
-        this.alertService.dismissLoaderController();
-        this.alertService.presentAlert(
-          'Sucesso',
-          'Login realizado com sucesso!'
-        );
-        this.router.navigate(['home']);
-      })
-      .catch((error) => {
-        this.alertService.dismissLoaderController();
-        this.alertService.presentAlert('Erro', 'Email ou senha inválidos!');
-        console.log(error.message);
-      });
+  private async logar() {
+    try {
+      await this.authService.signInWithEmailAndPassword(
+          this.formLogar.value['email'],
+          this.formLogar.value['senha']
+      );
+
+      this.alertService.dismissLoaderController();
+      this.alertService.presentAlert(
+        'Sucesso',
+        'Login realizado com sucesso!'
+      );
+
+      this.router.navigate(['home']);
+    } catch (error) {
+      this.alertService.dismissLoaderController();
+      this.alertService.presentAlert(
+        'Erro',
+        'Credenciais inválidas!'
+      );
+      console.error(error);
+    }
   }
 
   logarComGoogle(): void {
