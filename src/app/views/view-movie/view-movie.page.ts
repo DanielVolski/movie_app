@@ -85,6 +85,7 @@ export class ViewMoviePage implements OnInit {
   }
 
   delete() {
+    console.log(this.movie.id)
     this.alertService.deleteMovieAlert(this.movie.id);
   }
 

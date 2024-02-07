@@ -62,9 +62,10 @@ export class AlertService {
           text: 'Yes',
           role: 'confirm',
           handler: () => {
-            this.auth.SignOut().then(res => {
-              this.router.navigate(['signin']);
-            })
+          this.firebase.delete(id);
+          console.log(id)
+            // foi inserido após o envio
+            this.router.navigate(['home']);
           },
         },
       ]
