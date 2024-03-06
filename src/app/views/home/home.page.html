@@ -13,27 +13,11 @@
   </ion-header>
 
   <div id="container start">
-    <ion-list *ngFor="let movie of movies">
-      <ion-item lines="none">
-        <ion-card class="card" (click)="goToEdit(movie)" style="width: 100%">
-          <div class="info">
-            <ion-card-header>
-              <ion-card-title>{{movie.title}}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content class="genres">
-              <ion-text class="text" *ngFor="let genres of movie.genres">
-                {{genres}}
-              </ion-text>
-            </ion-card-content>
-            <ion-card-content>{{movie.writer}}</ion-card-content>
-          </div>
-          <div class="image" *ngIf="movie.downloadURL != null ">
-            <img alt="Poster of {{movie.title}}" src="{{movie.downloadURL}}" />
-          </div>
-        </ion-card>
-      </ion-item>
+    <ion-list>
+      <app-movie-card *ngFor="let movie of movies" [josney]="movie"></app-movie-card> 
     </ion-list>
-  </div>
+  </div> 
+
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="goToRegister()">
       <ion-icon name="add-outline"></ion-icon>

@@ -36,11 +36,7 @@ export class HomePage{
   goToRegister() {
     this.router.navigate(["/register-movie"])
   }
-
-  goToEdit(movie: Movie) {
-    this.router.navigateByUrl("/view-movie", {state: {movie: movie}});
-  }
-
+  
   logout(){
     this.alert.confirmAlert(this.user.uid);
   }
