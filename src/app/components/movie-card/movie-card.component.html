@@ -1,0 +1,18 @@
+<ion-item lines="none">
+  <ion-card class="card" (click)="goToEdit(josney)" style="width: 99%">
+    <div class="info">
+      <ion-card-header>
+        <ion-card-title>{{josney.title}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="genres">
+        <ion-text class="text" *ngFor="let genres of josney.genres">
+          {{genres}}
+        </ion-text>
+      </ion-card-content>
+      <ion-card-content>{{josney.writer}}</ion-card-content>
+    </div>
+    <div class="image" *ngIf="josney.downloadURL != null ">
+      <img alt="Poster of {{josney.title}}" src="{{josney.downloadURL}}" />
+    </div>
+  </ion-card>
+</ion-item>
