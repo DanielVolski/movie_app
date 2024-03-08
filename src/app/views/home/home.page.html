@@ -1,7 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Home</ion-title>
-    <ion-icon slot="end" (click)="logout()" name="exit-outline" style="margin-right: 5%;"></ion-icon>
+    <ion-searchbar animated #searchInput (ionChange)="onSearchChange($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
