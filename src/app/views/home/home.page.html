@@ -11,11 +11,12 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container start">
+  <div *ngIf="movies.length > 0" id="container start">
     <ion-list>
       <app-movie-card *ngFor="let movie of movies" [josney]="movie"></app-movie-card> 
     </ion-list>
   </div> 
+  <app-empty-screen *ngIf="movies.length === 0" [model]="emptyScreenModel"></app-empty-screen>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="goToRegister()">

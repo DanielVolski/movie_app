@@ -16,6 +16,10 @@ export class HomePage{
   query: any;
   isLoading: boolean = false;
   public user: any;
+  emptyScreenModel = {
+    title: 'No movies found',
+    icon: "sad-outline"
+  }
 
   constructor(
     private router: Router,
