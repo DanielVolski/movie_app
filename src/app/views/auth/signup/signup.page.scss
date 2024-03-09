@@ -1,0 +1,51 @@
+ion-content{
+    --background: var(--ion-color-light)
+}
+
+ion-item{
+    --background: none;
+}
+
+span{
+    font-size: 0.9rem;
+    font-weight: bolder;
+    color: var(--ion-color-light);
+    margin-left: 3dvw;
+    border: solid 5px var(--ion-color-danger);
+    background-color: var(--ion-color-danger);
+    border-radius: 5px;
+}
+
+ion-button {
+  margin-top: 10px;
+  margin: 2vw;
+  font-weight: bolder;
+}
+
+ion-input {
+    --padding-start: 1rem;
+    padding: 0 1rem;
+    font-size: 1rem;
+    
+}
+
+ion-label {
+    margin-bottom: .3rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+a{
+    color: var(--ion-color-secondary);
+    font-weight:lighter;
+    margin-left: 2vw;
+    margin-top: 1.5vh;
+    text-decoration: none;
+    transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
+    &:hover {
+        color: var(--ion-color-secondary);
+    }
+}
+
+
+

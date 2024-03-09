@@ -84,7 +84,8 @@
           color="sucess"
           shape="round"
         >
-          <input type="file" (change)="uploadFile($event.target)" />
+          <label for="fileInput">Upload File:</label>
+          <input type="file" id="fileInput" (change)="uploadFile($event.target)" />
         </ion-button>
       </ion-item>
     </ion-list>
