@@ -18,7 +18,7 @@
 
     </ion-toggle>
   </ion-item>
-  <form [formGroup]="formMovie" (ngSubmit)="submitForm()">
+  <form *ngIf="!isLoading" [formGroup]="formMovie" (ngSubmit)="submitForm()">
     <ion-list>
       <ion-item disabled="{{isDisabled}}">
         <ion-input
@@ -76,7 +76,7 @@
         </ion-select>
       </ion-item>
       <ion-item *ngIf="movie.downloadURL != null" >
-        <img src="{{this.movie.downloadURL}}" width="100%" height="100%" />
+        <img src="{{this.movie.downloadURL}}" width="100%" height="100%" title="Movie Poster" />
       </ion-item>
       <ion-item disabled="{{isDisabled}}">
         <ion-button
@@ -89,9 +89,10 @@
       </ion-item>
     </ion-list>
   </form>
-  <ion-button  (click)="edit()" expand="block" [disabled]="isDisabled" color="primary"
+  <ion-button *ngIf="!isLoading" (click)="edit()" expand="block" [disabled]="isDisabled" color="primary"
     >Edit</ion-button
   >
+  <app-loading-form *ngIf="isLoading"></app-loading-form>
   <ion-button [disabled]="isDisabled"
   (click)="delete()"
     expand="block"

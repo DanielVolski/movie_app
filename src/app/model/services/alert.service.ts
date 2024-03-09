@@ -27,7 +27,7 @@ export class AlertService {
     await alert.present();
   }
 
-  async confirmAlert(id: string) {
+  async confirmLogOut(id: string) {
     const alert = await this.alertController.create({
       header: 'Warning!',
       subHeader: 'You want logout?',
@@ -39,7 +39,8 @@ export class AlertService {
         {
           text: 'Yes',
           role: 'confirm',
-          handler: () => {
+          handler: async () => {
+            await this.auth.SignOut();
             this.router.navigate(['/signin']);
           },
         },

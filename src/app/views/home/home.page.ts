@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { FirebaseService } from '../../model/services/firebase.service';
 import { Movie } from '../../model/entities/Movie';
 import { AuthService } from 'src/app/model/services/auth.service';
-import { AlertController } from '@ionic/angular';
 import { AlertService } from 'src/app/model/services/alert.service';
 
 @Component({
@@ -25,7 +24,6 @@ export class HomePage{
     private router: Router,
     private firebase: FirebaseService,
     private auth: AuthService,
-    private alertController: AlertController,
     private alert: AlertService
   ) {
     this.user = this.auth.getUserLogged();
@@ -61,6 +59,6 @@ export class HomePage{
   }
   
   logout(){
-    this.alert.confirmAlert(this.user.uid);
+    this.alert.confirmLogOut(this.user.uid);
   }
 }

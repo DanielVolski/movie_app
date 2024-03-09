@@ -20,6 +20,7 @@ import { AlertService } from 'src/app/model/services/alert.service';
 })
 export class ViewMoviePage implements OnInit {
   formMovie: FormGroup;
+  isLoading: boolean = false;
   movie!: Movie;
   public poster: any;
   public user: any;
@@ -31,6 +32,7 @@ export class ViewMoviePage implements OnInit {
     private auth: AuthService,
     private formBuilder: FormBuilder
   ) {
+    this.isLoading = true;
     this.formMovie = new FormGroup({
       title: new FormControl(''),
       director: new FormControl(''),
@@ -40,6 +42,7 @@ export class ViewMoviePage implements OnInit {
       uid: new FormControl(''),
     });
     this.user = this.auth.getUserLogged();
+    this.isLoading = false;
   }
 
   ngOnInit() {

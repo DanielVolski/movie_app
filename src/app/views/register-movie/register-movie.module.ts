@@ -7,15 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { RegisterMoviePageRoutingModule } from './register-movie-routing.module';
 
 import { RegisterMoviePage } from './register-movie.page';
+import { ComponentsModule } from "../../components/components.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RegisterMoviePageRoutingModule,
-    ReactiveFormsModule
-  ],
-  declarations: [RegisterMoviePage]
+    declarations: [RegisterMoviePage],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RegisterMoviePageRoutingModule,
+        ReactiveFormsModule,
+        ComponentsModule
+    ]
 })
 export class RegisterMoviePageModule {}

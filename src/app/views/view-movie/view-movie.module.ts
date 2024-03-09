@@ -7,15 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { ViewMoviePageRoutingModule } from './view-movie-routing.module';
 
 import { ViewMoviePage } from './view-movie.page';
+import { ComponentsModule } from "../../components/components.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ViewMoviePageRoutingModule,
-    ReactiveFormsModule
-  ],
-  declarations: [ViewMoviePage]
+    declarations: [ViewMoviePage],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ViewMoviePageRoutingModule,
+        ReactiveFormsModule,
+        ComponentsModule
+    ]
 })
 export class ViewMoviePageModule {}

@@ -12,7 +12,8 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
   styleUrls: ['./register-movie.page.scss'],
 })
 export class RegisterMoviePage implements OnInit {
-  formMovie: FormGroup;
+  formMovie: FormGroup = new FormGroup({});
+  isLoading: boolean = false;
   public image: any;
   public user: any;
 
@@ -23,6 +24,7 @@ export class RegisterMoviePage implements OnInit {
     private auth: AuthService,
     private formBuilder: FormBuilder
   ) {
+    this.isLoading = true;
     this.user = this.auth.getUserLogged();
     this.formMovie = new FormGroup({
       title: new FormControl(''),
@@ -32,6 +34,7 @@ export class RegisterMoviePage implements OnInit {
       genres: new FormArray([]),
       uid: new FormControl('')
     });
+    this.isLoading = false;
   }
 
   submitForm() {
