@@ -79,8 +79,10 @@ export class FirebaseService {
     return this.firestore.collection(this.PATH).doc(id).delete();
   }
 
-  read(uid: string) {
-    return this.firestore.collection(this.PATH, ref => ref.where('uid', '==', uid)
-    ).snapshotChanges();
+  read(uid: string, query?: any[]) {
+    if (query)
+      return this.firestore.collection(this.PATH, ref => ref.where(query[0], query[1], query[2])).snapshotChanges();
+    else
+      return this.firestore.collection(this.PATH, ref => ref.where('uid', '==', uid)).snapshotChanges();
   }
 }

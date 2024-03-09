@@ -13,6 +13,8 @@ import { AlertService } from 'src/app/model/services/alert.service';
 })
 export class HomePage{
   movies: Movie[] = [];
+  query: any;
+  isLoading: boolean = false;
   public user: any;
 
   constructor(
@@ -33,14 +35,27 @@ export class HomePage{
     })
   }
 
+  async onSearchChange(event: any) {
+    this.query = event.detail.value.toLowerCase();
+    this.movies = [];
+    if (this.query.length > 0) {
+      this.isLoading = true;
+      this.firebase.read(this.user.id, ['title', '==', this.query]).subscribe(async (res) => {
+        this.movies = await res.map(movie => {
+          return {
+            id: movie.payload.doc.id,
+            ...movie.payload.doc.data() as any
+          } as Movie;
+          });
+          this.isLoading = false;
+        }); 
+    }
+  }
+
   goToRegister() {
     this.router.navigate(["/register-movie"])
   }
-
-  goToEdit(movie: Movie) {
-    this.router.navigateByUrl("/view-movie", {state: {movie: movie}});
-  }
-
+  
   logout(){
     this.alert.confirmAlert(this.user.uid);
   }
