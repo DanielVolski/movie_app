@@ -1,0 +1,71 @@
+img {
+    border-radius: 10px;
+  }
+  
+  #container {
+    text-align: center;
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  #container strong {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  #container p {
+    font-size: 16px;
+    line-height: 22px;
+  
+    color: #8c8c8c;
+  
+    margin: 0;
+  }
+  
+  #container a {
+    text-decoration: none;
+  }
+  
+  .text {
+    font-size: 12px;
+    font-weight: bold;
+    border-style: solid;
+    border-color: #8c8c8c;
+    border-radius: 10px;
+    border-width: thin;
+    background-color: #8c8c8c;
+    color: #1c1c1d;
+    margin: 0 2px 2px 2px;
+    padding: 2px;
+  }
+  
+  .genres {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  
+  .card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 5%;
+    .info {
+      min-width: 60%;
+      max-width: 100%;
+    }
+    .image {
+      width: 40%; 
+    }
+  }
+  
+  ion-fab-button::part(native) {
+    background-color: #b7f399;
+    border-radius: 15px;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    color: black;
+  }
