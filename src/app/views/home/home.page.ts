@@ -12,7 +12,6 @@ import { AlertService } from 'src/app/model/services/alert.service';
 })
 export class HomePage{
   public movies: Movie[] = [];
-  searchQuery: any;
   query: any;
   isLoading: boolean = false;
   public user: any;
@@ -29,17 +28,18 @@ export class HomePage{
   ) {
     this.readUserInformation();
   }
-
+  
   async onSearchChange(event: any) {
-    this.query = event.detail.value.toLowerCase();
-    this.searchQuery = [];
+    this.query = event.detail.value.toLowerCase();  
     if (this.query.length > 0) {
       this.isLoading = true;
-      this.searchQuery = this.movies.filter(movie => 
+      this.movies = this.movies.filter(movie => 
         movie.title.toLowerCase().includes(this.query)
       );
       this.isLoading = false;
-    }
+    } else {
+      this.readUserInformation();
+    } 
   }
 
   goToRegister() {
