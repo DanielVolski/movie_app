@@ -11,7 +11,8 @@ import { AlertService } from 'src/app/model/services/alert.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage{
-  movies: Movie[] = [];
+  public movies: Movie[] = [];
+  searchQuery: any;
   query: any;
   isLoading: boolean = false;
   public user: any;
@@ -26,31 +27,18 @@ export class HomePage{
     private auth: AuthService,
     private alert: AlertService
   ) {
-    this.user = this.auth.getUserLogged();
-    this.firebase.read(this.user.uid).subscribe(res =>{
-      this.movies = res.map(movie => {
-        return {
-          id: movie.payload.doc.id,
-          ...movie.payload.doc.data() as any
-        } as Movie;
-      })
-    })
+    this.readUserInformation();
   }
 
   async onSearchChange(event: any) {
     this.query = event.detail.value.toLowerCase();
-    this.movies = [];
+    this.searchQuery = [];
     if (this.query.length > 0) {
       this.isLoading = true;
-      this.firebase.read(this.user.id, ['title', '==', this.query]).subscribe(async (res) => {
-        this.movies = await res.map(movie => {
-          return {
-            id: movie.payload.doc.id,
-            ...movie.payload.doc.data() as any
-          } as Movie;
-          });
-          this.isLoading = false;
-        }); 
+      this.searchQuery = this.movies.filter(movie => 
+        movie.title.toLowerCase().includes(this.query)
+      );
+      this.isLoading = false;
     }
   }
 
@@ -60,5 +48,23 @@ export class HomePage{
   
   logout(){
     this.alert.confirmLogOut(this.user.uid);
+  }
+
+  async readUserInformation() {
+    this.isLoading = true;
+    console.log(this.isLoading);
+    this.user = this.auth.getUserLogged();
+    this.firebase.read(this.user.uid).subscribe(res =>{
+      this.movies = res.map(movie => {
+        return {
+          id: movie.payload.doc.id,
+          ...movie.payload.doc.data() as any
+        } as Movie;
+      })
+    })
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
+    console.log(this.isLoading)
   }
 }

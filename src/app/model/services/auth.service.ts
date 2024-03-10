@@ -14,7 +14,7 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  dataUser: any;
+  public dataUser: any;
   constructor(
     private firebase: FirebaseService,
     private fireAuth: AngularFireAuth,
@@ -25,6 +25,7 @@ export class AuthService {
       if (user) {
         this.dataUser = user;
         localStorage.setItem('user', JSON.stringify(this.dataUser));
+        console.log(localStorage.getItem('user'));
       } else {
         localStorage.setItem('user', 'null');
       }
@@ -63,8 +64,13 @@ export class AuthService {
   }
 
   public getUserLogged() {
-    console.log(getAuth().currentUser);
-    return getAuth().currentUser;
+    const user: any = JSON.parse(localStorage.getItem('user') || 'null');
+    if (user != null) {
+      return user;
+    }
+    else {
+      return null;
+    }
   }
 
   public isLoggedIn(): boolean {
