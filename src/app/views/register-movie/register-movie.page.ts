@@ -25,51 +25,13 @@ export class RegisterMoviePage implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.isLoading = true;
-    this.user = this.auth.getUserLogged();
-    this.formMovie = new FormGroup({
-      title: new FormControl(''),
-      director: new FormControl(''),
-      writer: new FormControl(''),
-      releaseDate: new FormControl(''),
-      genres: new FormArray([]),
-      uid: new FormControl('')
-    });
     this.isLoading = false;
   }
-
-  submitForm() {
-    if (!this.formMovie.valid)
-      return false;
-    this.create();
-    return true;
-  }
-
-  uploadFile(image: any) {
-    this.image = image.files;
-  }
-
-  create() {
-    this.firebase.uploadMovie(
-      this.image,
-      new Movie(
-        this.formMovie.value['title'],
-        this.formMovie.value['director'],
-        this.formMovie.value['writer'],
-        this.formMovie.value['releaseDate'],
-        this.formMovie.value['genres'],
-        this.user.uid
-      )
-    );
-    this.router.navigate(['/home']);
-  }
-
   ngOnInit() {
-    this.formMovie = this.formBuilder.group({
-      title: ['', Validators.required],
-      director: ['', Validators.required],
-      writer: ['', Validators.required],
-      releaseDate: ['', [Validators.required]],
-      genres: ['', Validators.required],
-    });
+
+  }
+    
+  navigateToHome() {
+    this.router.navigate(['/home']);
   }
 }
