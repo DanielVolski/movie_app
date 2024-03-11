@@ -20,6 +20,7 @@ ion-button {
   margin-top: 10px;
   margin: 2vw;
   font-weight: bolder;
+  color: var(--ion-color-light);
 }
 
 ion-input {
@@ -36,15 +37,11 @@ ion-label {
 }
 
 a{
-    color: var(--ion-color-secondary);
+    color: var(--ion-color-success-tint);
     font-weight:lighter;
     margin-left: 2vw;
     margin-top: 1.5vh;
     text-decoration: none;
-    transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
-    &:hover {
-        color: var(--ion-color-secondary);
-    }
 }
 
 
