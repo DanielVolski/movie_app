@@ -81,8 +81,10 @@
         <input type="file" id="fileInput" (change)="uploadFile($event.target)" />
       </ion-button>
     </ion-item>
-    <ion-item>
-      <ion-button type="submit" expand="block">Register</ion-button>
-    </ion-item>
   </ion-list>
+  <ion-buttons>
+    <ion-button *ngIf="!this.movie" type="submit" expand="block" (click)="create()">Register</ion-button>
+    <ion-button *ngIf="this.movie" type="submit" expand="block" (click)="edit()">Save</ion-button>
+    <ion-button *ngIf="this.movie" type="submit" expand="block" (click)="delete()">Delete</ion-button>
+  </ion-buttons>
 </form>

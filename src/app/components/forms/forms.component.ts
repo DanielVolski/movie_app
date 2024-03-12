@@ -14,7 +14,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 })
 export class FormsComponent implements OnInit {
 
-  @Input() movie!: Movie;;
+  @Input() movie!: Movie; editMode: any;
   @Output() movieCreated = new EventEmitter<Movie>();
   formMovie: FormGroup = new FormGroup({});
   image: any;
@@ -39,10 +39,16 @@ export class FormsComponent implements OnInit {
       genres: [this.movie ? this.movie.genres : '', Validators.required],
     });
   }
+
   submitForm() {
     if (!this.formMovie.valid)
       return false;
-    this.create();
+    if (this.movie) {
+      this.edit();
+    }
+    else {
+      this.create();
+    }
     return true;
   }
 
@@ -90,10 +96,6 @@ export class FormsComponent implements OnInit {
   delete() {
     console.log(this.movie.id)
     this.alert.deleteMovieAlert(this.movie.id);
-  }
-
-  enableEdit() {
-    this.isDisabled = !this.isDisabled;
   }
 
   backToHome() {
