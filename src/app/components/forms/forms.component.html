@@ -1,11 +1,16 @@
 <form [formGroup]="formMovie" (ngSubmit)="submitForm()">
   <ion-list>
     <ion-item>
+      <ion-label>Edit Mode</ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+    <ion-item>
       <ion-input
         label="Movie title"
         labelPlacement="stacked"
         placeholder="Type the title of the movie"
         formControlName="title"
+        [disabled]="editMode"
       ></ion-input>
     </ion-item>
     <span
@@ -18,6 +23,7 @@
         labelPlacement="stacked"
         placeholder="Type the name of the director"
         formControlName="director"
+        [disabled]="editMode"
       ></ion-input>
     </ion-item>
     <span
@@ -30,6 +36,7 @@
         labelPlacement="stacked"
         placeholder="Type the name of the writer"
         formControlName="writer"
+        [disabled]="editMode"
       ></ion-input>
     </ion-item>
     <span
@@ -43,6 +50,7 @@
         labelPlacement="stacked"
         placeholder="Type the release date"
         formControlName="releaseDate"
+        [disabled]="editMode"
       ></ion-input>
     </ion-item>
     <span
@@ -57,6 +65,7 @@
         labelPlacement="stacked"
         [multiple]="true"
         formControlName="genres"
+        [disabled]="editMode"
       >
         <ion-select-option value="Action">Action</ion-select-option>
         <ion-select-option value="Adventure">Adventure</ion-select-option>
@@ -82,9 +91,7 @@
       </ion-button>
     </ion-item>
   </ion-list>
-  <ion-buttons>
-    <ion-button *ngIf="!this.movie" type="submit" expand="block" (click)="create()">Register</ion-button>
-    <ion-button *ngIf="this.movie" type="submit" expand="block" (click)="edit()">Save</ion-button>
-    <ion-button *ngIf="this.movie" type="submit" expand="block" (click)="delete()">Delete</ion-button>
-  </ion-buttons>
 </form>
+  <ion-button color="success" *ngIf="!this.movie" type="submit" expand="block" (click)="create()">Register</ion-button>
+  <ion-button color="success" *ngIf="this.movie" type="submit" expand="block" (click)="edit()">Save</ion-button>
+  <ion-button color="danger" *ngIf="this.movie" type="submit" expand="block" (click)="delete()">Delete</ion-button>

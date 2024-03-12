@@ -29,17 +29,17 @@ export class HomePage{
     this.readUserInformation();
   }
   
-  async onSearchChange(event: any) {
-    this.query = event.detail.value.toLowerCase();  
+  onSearchChange(event: any) {
+    this.query = event.detail.value.toLowerCase(); 
+    this.isLoading = true;
     if (this.query.length > 0) {
-      this.isLoading = true;
       this.movies = this.movies.filter(movie => 
         movie.title.toLowerCase().includes(this.query)
       );
-      this.isLoading = false;
     } else {
       this.readUserInformation();
-    } 
+    }
+    this.isLoading = false;
   }
 
   goToRegister() {
@@ -52,7 +52,6 @@ export class HomePage{
 
   async readUserInformation() {
     this.isLoading = true;
-    console.log(this.isLoading);
     this.user = this.auth.getUserLogged();
     this.firebase.read(this.user.uid).subscribe(res =>{
       this.movies = res.map(movie => {
@@ -64,7 +63,6 @@ export class HomePage{
     })
     setTimeout(() => {
       this.isLoading = false;
-    }, 2000);
-    console.log(this.isLoading)
+    }, 1000);
   }
 }
