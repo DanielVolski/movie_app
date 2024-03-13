@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button default-href="/"></ion-back-button>
+      <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
     <ion-title>Edit your movie</ion-title>
   </ion-toolbar>
@@ -13,5 +13,5 @@
       <ion-title size="large">Edit your movie</ion-title>
     </ion-toolbar>
   </ion-header>
-  <app-forms [movie]="movie" [editMode]="true"></app-forms>
+  <app-forms [movie]="movie"></app-forms>
 </ion-content>

@@ -1,0 +1,24 @@
+span{
+    font-size: 0.9rem;
+    font-weight: bolder;
+    color: var(--ion-color-light);
+    margin-left: 3dvw;
+    border: solid 5px var(--ion-color-danger);
+    background-color: var(--ion-color-danger);
+    border-radius: 5px;
+}
+
+#poster{
+   display: flex;
+    width: auto;
+    align-items: center;
+    position: relative;
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 40vw;
+        border-radius: 10px;
+    }
+}
+

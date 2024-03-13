@@ -1,56 +1,57 @@
 <form [formGroup]="formMovie" (ngSubmit)="submitForm()">
   <ion-list>
-    <ion-item>
+    <ion-item lines="none" *ngIf="this.movie">
       <ion-label>Edit Mode</ion-label>
-      <ion-toggle></ion-toggle>
+      <ion-toggle (ionChange)="enableButton()"></ion-toggle>
     </ion-item>
-    <ion-item>
+  </ion-list>
+  <div id="poster" lines="none" *ngIf="this.poster != null" >
+    <img  src="{{this.movie.downloadURL}}" width="100%" height="100%" title="Movie Poster" />
+  </div>
+  <ion-list>
+    <ion-item lines="none" disabled="{{isDisabled}}">
       <ion-input
         label="Movie title"
         labelPlacement="stacked"
         placeholder="Type the title of the movie"
         formControlName="title"
-        [disabled]="editMode"
       ></ion-input>
     </ion-item>
     <span
       *ngIf="formMovie.get('title')?.touched && formMovie.get('title')?.errors?.['required']"
       >Title is required</span
     >
-    <ion-item>
+    <ion-item lines="none" disabled="{{isDisabled}}">
       <ion-input
         label="Director name"
         labelPlacement="stacked"
         placeholder="Type the name of the director"
         formControlName="director"
-        [disabled]="editMode"
       ></ion-input>
     </ion-item>
     <span
       *ngIf="formMovie.get('director')?.touched && formMovie.get('director')?.errors?.['required']"
       >Director's name is required</span
     >
-    <ion-item>
+    <ion-item lines="none" disabled="{{isDisabled}}">
       <ion-input
         label="Writer name"
         labelPlacement="stacked"
         placeholder="Type the name of the writer"
         formControlName="writer"
-        [disabled]="editMode"
       ></ion-input>
     </ion-item>
     <span
       *ngIf="formMovie.get('writer')?.touched && formMovie.get('writer')?.errors?.['required']"
       >Writer's name is required</span
     >
-    <ion-item>
+    <ion-item lines="none" disabled="{{isDisabled}}">
       <ion-input
         label="Release date"
         type="date"
         labelPlacement="stacked"
         placeholder="Type the release date"
         formControlName="releaseDate"
-        [disabled]="editMode"
       ></ion-input>
     </ion-item>
     <span
@@ -59,13 +60,12 @@
     <span
       *ngIf="formMovie.get('releaseDate')?.hasError('pattern')"
       >Invalid date</span>
-    <ion-item>
+    <ion-item lines="none" disabled="{{isDisabled}}">
       <ion-select
         label="Genres"
         labelPlacement="stacked"
         [multiple]="true"
         formControlName="genres"
-        [disabled]="editMode"
       >
         <ion-select-option value="Action">Action</ion-select-option>
         <ion-select-option value="Adventure">Adventure</ion-select-option>
@@ -84,14 +84,14 @@
       *ngIf="formMovie.get('genres')?.touched && formMovie.get('genres')?.errors?.['required']"
       >Genre is required</span
     >
-    <ion-item>
-      <ion-button size="default" color="sucess" shape="round">
-        <label for="fileInput">Choose a file:</label>
+    <ion-item lines="none" disabled="{{isDisabled}}">
+      <ion-button fill="clear" shape="round">
+        <label id="file_input" for="fileInput">Choose a file:</label>
         <input type="file" id="fileInput" (change)="uploadFile($event.target)" />
       </ion-button>
     </ion-item>
   </ion-list>
 </form>
   <ion-button color="success" *ngIf="!this.movie" type="submit" expand="block" (click)="create()">Register</ion-button>
-  <ion-button color="success" *ngIf="this.movie" type="submit" expand="block" (click)="edit()">Save</ion-button>
-  <ion-button color="danger" *ngIf="this.movie" type="submit" expand="block" (click)="delete()">Delete</ion-button>
+  <ion-button disabled="{{isDisabled}}" color="success" *ngIf="this.movie" type="submit" expand="block" (click)="edit()">Save</ion-button>
+  <ion-button disabled="{{isDisabled}}"color="danger" *ngIf="this.movie" type="submit" expand="block" (click)="delete()">Delete</ion-button>

@@ -4,7 +4,7 @@ import { FirebaseService } from '../../model/services/firebase.service';
 import { Movie } from '../../model/entities/Movie';
 import { AlertService } from 'src/app/model/services/alert.service';
 import { AuthService } from 'src/app/model/services/auth.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -15,12 +15,11 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 export class FormsComponent implements OnInit {
 
   @Input() movie!: Movie; 
-  @Input() editMode: boolean = false;
   @Output() movieCreated = new EventEmitter<Movie>();
   formMovie: FormGroup = new FormGroup({});
   image: any;
   public user: any;
-  public poster: any;
+  public poster: any = null;
   isDisabled: boolean = true;
 
   constructor(private router: Router,
@@ -32,6 +31,12 @@ export class FormsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.movie){
+      this.isDisabled = false;
+    }
+    else {
+      this.poster = this.movie.downloadURL
+    }
     this.formMovie = this.formBuilder.group({
       title: [this.movie ? this.movie.title : '', Validators.required],
       director: [this.movie ? this.movie.director : '', Validators.required],
@@ -49,6 +54,7 @@ export class FormsComponent implements OnInit {
 
   uploadFile(image: any) {
     this.image = image.files;
+    this.poster = this.image;
   }
 
   create() {
@@ -94,6 +100,15 @@ export class FormsComponent implements OnInit {
 
   backToHome() {
     this.router.navigate(['/home']);
+  }
+
+  enableButton() {
+    if (this.isDisabled) {
+      this.isDisabled = false;
+    }
+    else {
+      this.isDisabled = true;
+    }
   }
 
 }
