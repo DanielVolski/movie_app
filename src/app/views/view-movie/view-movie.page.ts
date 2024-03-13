@@ -19,7 +19,6 @@ import { AlertService } from 'src/app/model/services/alert.service';
   styleUrls: ['./view-movie.page.scss'],
 })
 export class ViewMoviePage implements OnInit {
-  formMovie: FormGroup;
   isLoading: boolean = false;
   movie!: Movie;
   public poster: any;
@@ -27,76 +26,16 @@ export class ViewMoviePage implements OnInit {
   isDisabled: boolean = true;
   constructor(
     private router: Router,
-    private firebase: FirebaseService,
-    private alertService: AlertService,
     private auth: AuthService,
-    private formBuilder: FormBuilder
   ) {
-    this.isLoading = true;
-    this.formMovie = new FormGroup({
-      title: new FormControl(''),
-      director: new FormControl(''),
-      writer: new FormControl(''),
-      releaseDate: new FormControl(''),
-      genres: new FormArray([]),
-      uid: new FormControl(''),
-    });
     this.user = this.auth.getUserLogged();
-    this.isLoading = false;
   }
 
   ngOnInit() {
     this.movie = history.state.movie;
-    this.formMovie = this.formBuilder.group({
-      title: [this.movie.title, [Validators.required]],
-      director: [this.movie.director, [Validators.required]],
-      writer: [this.movie.writer, [Validators.required]],
-      releaseDate: [this.movie.releaseDate, [Validators.required]],
-      genres: [this.movie.genres, [Validators.required]],
-    });
-  }
-
-  uploadFile(image: any) {
-    this.poster = image.files;
-  }
-
-  submitForm() {
-    if (!this.formMovie.valid) return false;
-    this.edit();
-    return true;
-  }
-
-  edit() {
-    let updated: Movie = new Movie(
-      this.formMovie.value.title,
-      this.formMovie.value.director,
-      this.formMovie.value.writer,
-      this.formMovie.value.releaseDate,
-      this.formMovie.value.genres,
-      this.user.uid
-    );
-    this.movie = history.state.movie;
-    updated.id = this.movie.id;
-    if (this.poster) {
-      this.firebase.uploadMovie(this.poster, updated);
-    } else {
-      updated.downloadURL = this.movie.downloadURL;
-      this.firebase.uploadMovie(null, updated);
-    }
-    this.alertService.presentAlert('Sucess', 'The movie has been updated');
-    this.backToHome()
-  }
-
-  delete() {
-    console.log(this.movie.id)
-    this.alertService.deleteMovieAlert(this.movie.id);
   }
 
   backToHome() {
     this.router.navigate(['/home']);
-  }
-
-  enableEdit() {
-    this.isDisabled = !this.isDisabled;
   }
 }
