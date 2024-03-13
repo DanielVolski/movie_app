@@ -34,9 +34,6 @@ export class FormsComponent implements OnInit {
     if (!this.movie){
       this.isDisabled = false;
     }
-    else {
-      this.poster = this.movie.downloadURL
-    }
     this.formMovie = this.formBuilder.group({
       title: [this.movie ? this.movie.title : '', Validators.required],
       director: [this.movie ? this.movie.director : '', Validators.required],
@@ -54,7 +51,6 @@ export class FormsComponent implements OnInit {
 
   uploadFile(image: any) {
     this.image = image.files;
-    this.poster = this.image;
   }
 
   create() {
