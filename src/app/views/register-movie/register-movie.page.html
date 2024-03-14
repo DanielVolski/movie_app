@@ -12,6 +12,6 @@
       <ion-title size="large">Register your movie</ion-title>
     </ion-toolbar>
   </ion-header>
-  <app-forms *ngIf="!isLoading" (onSubmit)="navigateToHome()"></app-forms>
+  <app-forms *ngIf="!isLoading" (movieCreated)="onCreateMovie($event)" (imageUploaded)="onUploadFile($event)"></app-forms>
   <app-loading-form *ngIf="isLoading"></app-loading-form>
 </ion-content>

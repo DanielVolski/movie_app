@@ -12,7 +12,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
   styleUrls: ['./register-movie.page.scss'],
 })
 export class RegisterMoviePage implements OnInit {
-  formMovie: FormGroup = new FormGroup({});
+  event: FormGroup = new FormGroup({});
   isLoading: boolean = false;
   public image: any;
   public user: any;
@@ -22,16 +22,33 @@ export class RegisterMoviePage implements OnInit {
     private firebase: FirebaseService,
     private alert: AlertService,
     private auth: AuthService,
-    private formBuilder: FormBuilder
   ) {
     this.isLoading = true;
     this.isLoading = false;
+    this.user = this.auth.getUserLogged();
   }
-  ngOnInit() {
+  ngOnInit() {}
+
+  onUploadFile(event: any) {
+    this.image = event.target.files;
+  }
+
+  onCreateMovie(event: Movie) {
+    this.firebase.uploadMovie(
+      this.image,
+      new Movie(
+        event.title,
+        event.director,
+        event.writer,
+        event.releaseDate,
+        event.genres,
+        this.user.uid
+      )
+    );
+    this.alert.presentAlert('Sucess', 'Movie created successfully').then(() => {
+      this.router.navigate(['/home']);
+    });
 
   }
-    
-  navigateToHome() {
-    this.router.navigate(['/home']);
-  }
+
 }

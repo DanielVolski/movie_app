@@ -13,5 +13,5 @@
       <ion-title size="large">Edit your movie</ion-title>
     </ion-toolbar>
   </ion-header>
-  <app-forms [movie]="movie"></app-forms>
+  <app-forms [movie]="movie" (imageUploaded)="onUploadFile($event)" (movieUpdated)="onUpdatedMovie($event)" (movieDeleted)="onDeletedMovie($event)"></app-forms>
 </ion-content>

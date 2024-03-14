@@ -16,15 +16,15 @@ export class FormsComponent implements OnInit {
 
   @Input() movie!: Movie; 
   @Output() movieCreated = new EventEmitter<Movie>();
+  @Output() movieDeleted = new EventEmitter<Movie>();
+  @Output() movieUpdated = new EventEmitter<Movie>();
+  @Output() imageUploaded = new EventEmitter<any>();
   formMovie: FormGroup = new FormGroup({});
   image: any;
   public user: any;
   public poster: any = null;
   isDisabled: boolean = true;
-
   constructor(private router: Router,
-    private firebase: FirebaseService,
-    private alert: AlertService,
     private auth: AuthService,
     private formBuilder: FormBuilder) {
     this.user = this.auth.getUserLogged();
@@ -50,52 +50,19 @@ export class FormsComponent implements OnInit {
   }
 
   uploadFile(image: any) {
-    this.image = image.files;
+    this.imageUploaded.emit(image);
   }
 
   create() {
-    this.firebase.uploadMovie(
-      this.image,
-      new Movie(
-        this.formMovie.value['title'],
-        this.formMovie.value['director'],
-        this.formMovie.value['writer'],
-        this.formMovie.value['releaseDate'],
-        this.formMovie.value['genres'],
-        this.user.uid
-      )
-    );
-    this.movieCreated.emit();
-    this.router.navigate(['/home']);
+    this.movieCreated.emit(this.formMovie.value);
   }
-
+  
   edit() {
-    let updated: Movie = new Movie(
-      this.formMovie.value.title,
-      this.formMovie.value.director,
-      this.formMovie.value.writer,
-      this.formMovie.value.releaseDate,
-      this.formMovie.value.genres,
-      this.user.uid
-    );
-    this.movie = history.state.movie;
-    updated.id = this.movie.id;
-    if (this.poster) {
-      this.firebase.uploadMovie(this.poster, updated);
-    } else {
-      updated.downloadURL = this.movie.downloadURL;
-      this.firebase.uploadMovie(null, updated);
-    }
-    this.alert.presentAlert('Sucess', 'The movie has been updated');
-    this.backToHome()
+    this.movieUpdated.emit(this.formMovie.value);
   }
-
+  
   delete() {
-    this.alert.deleteMovieAlert(this.movie.id);
-  }
-
-  backToHome() {
-    this.router.navigate(['/home']);
+    this.movieDeleted.emit(this.movie);
   }
 
   enableButton() {

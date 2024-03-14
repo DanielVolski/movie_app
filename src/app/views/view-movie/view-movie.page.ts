@@ -2,15 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Movie } from '../../model/entities/Movie';
 import { Router } from '@angular/router';
 import { FirebaseService } from '../../model/services/firebase.service';
-import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/model/services/auth.service';
-import {
-  FormBuilder,
-  FormGroup,
-  FormControl,
-  FormArray,
-  Validators
-} from '@angular/forms';
 import { AlertService } from 'src/app/model/services/alert.service';
 
 @Component({
@@ -27,6 +19,8 @@ export class ViewMoviePage implements OnInit {
   constructor(
     private router: Router,
     private auth: AuthService,
+    private firebase: FirebaseService,
+    private alert: AlertService
   ) {
     this.user = this.auth.getUserLogged();
   }
@@ -35,7 +29,34 @@ export class ViewMoviePage implements OnInit {
     this.movie = history.state.movie;
   }
 
-  backToHome() {
-    this.router.navigate(['/home']);
+  onUploadFile(event: any) {
+    this.poster = event.target.files;
+  }
+
+  onUpdatedMovie(event: Movie) {
+    let updated: Movie = new Movie(
+      event.title,
+      event.director,
+      event.writer,
+      event.releaseDate,
+      event.genres,
+      this.user.uid
+    );
+    this.movie = history.state.movie;
+    updated.id = this.movie.id;
+    if (this.poster) {
+      this.firebase.uploadMovie(this.poster, updated);
+    } else {
+      updated.downloadURL = this.movie.downloadURL;
+      this.firebase.uploadMovie(null, updated);
+    }
+    this.alert.presentAlert('Sucess', 'The movie has been updated').then(() => {  
+      this.router.navigate(['/home']);
+    });
+    
+  }
+
+  onDeletedMovie(event: Movie) {
+    this.alert.deleteMovieAlert(event.id);
   }
 }

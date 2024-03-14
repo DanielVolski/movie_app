@@ -5,7 +5,7 @@
       <ion-toggle (ionChange)="enableButton()"></ion-toggle>
     </ion-item>
   </ion-list>
-  <div id="poster" lines="none" *ngIf="this.movie.downloadURL != null" >
+  <div id="poster" lines="none" *ngIf="this.movie && this.movie.downloadURL != null" >
     <img  src="{{this.movie.downloadURL}}" width="100%" height="100%" title="Movie Poster" />
   </div>
   <ion-list>
@@ -87,7 +87,7 @@
     <ion-item lines="none" disabled="{{isDisabled}}">
       <ion-button fill="clear" shape="round">
         <label id="file_input" for="fileInput">Choose a file:</label>
-        <input type="file" id="fileInput" (change)="uploadFile($event.target)" />
+        <input type="file" id="fileInput" (change)="uploadFile($event)" />
       </ion-button>
     </ion-item>
   </ion-list>
